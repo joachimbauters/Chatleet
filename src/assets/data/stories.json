@@ -1,0 +1,26 @@
+{
+  "stories": [
+    {
+      "gender": "vrouw",
+      "name": {
+        "voornaam": "Emma",
+        "achternaam": "Plasschaert",
+        "link": "emmaplasschaert"
+      },
+      "picture": {
+        "thumbnail": "./assets/emma.jpg"
+      }
+    },
+    {
+      "gender": "vrouw",
+      "name": {
+        "voornaam": "Jolien",
+        "achternaam": "D'hoore",
+        "link": "joliendhoore"
+      },
+      "picture": {
+        "thumbnail": "./assets/jolien.jpg"
+      }
+    }
+  ]
+}

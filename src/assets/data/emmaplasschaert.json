@@ -1,0 +1,81 @@
+{
+  "scenarios": {
+    "scenario_1": {
+      "ontvanger": "Emma Plasschaert",
+      "premise": [
+        {
+          "type": "message",
+          "user": "character",
+          "character": "emma",
+          "text": "Laat het zeilen maar komen!! ⛵️💪"
+        },
+        {
+          "type": "image",
+          "user": "character",
+          "character": "emma",
+          "src": "./assets/scenario-1/selfie.png"
+        }
+      ],
+      "dialogues": [
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Amai, ik zal wel studeren voor da examen van morgen!",
+              "id": 1
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Break a leg! 😉 Ma nie te letterlijk he 😂",
+              "id": 2
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Can I have this?"
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Can I have this?"
+            }
+          ],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Can I have this?"
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Can I have this?"
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Can I have this?"
+            }
+          ],
+          "outro": []
+        }
+      ]
+    }
+  }
+}

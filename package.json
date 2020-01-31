@@ -47,6 +47,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
-    "phaser": "^3.22.0"
+    "phaser": "^3.22.0",
+    "siema": "^1.5.1"
   }
 }

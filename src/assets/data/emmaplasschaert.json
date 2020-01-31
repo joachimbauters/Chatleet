@@ -30,22 +30,48 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Break a leg! 😉 Ma nie te letterlijk he 😂",
+              "text": "Break a leg! 😉 Ma nie te letterlijk eh 😂",
               "id": 2
+            }
+          ],
+          "replies": [],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Thx!, Wow studeer je nog naast het zeilen?! 😱😱😱 en waarda?",
+              "id": 6
+            },
+            {
+              "type": "video",
+              "user": "other",
+              "character": "gebruiker",
+              "src": "./assets/scenario-1/video.mp4",
+              "id": 6
             }
           ],
           "replies": [
             {
-              "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "Can I have this?"
+              "type": "image",
+              "user": "character",
+              "character": "emma",
+              "src": "./assets/scenario-1/meme1.jpg"
             },
             {
               "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "Can I have this?"
+              "user": "character",
+              "character": "emma",
+              "text": "Tijdens het studeren luister ik altijd naar de Sporza podcast haha, mss is het een tip voor jou? 😀"
+            },
+            {
+              "type": "link",
+              "user": "character",
+              "character": "emma",
+              "link": "https://sporza.be/nl/sporza-podcast/"
             }
           ],
           "outro": []
@@ -56,21 +82,153 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Can I have this?"
-            },
-            {
-              "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "Can I have this?"
+              "text": "Wow! Studeer je nog naast zeilen?",
+              "id": 3
             }
           ],
           "replies": [
             {
               "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Hahaha 😂"
+            },
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Seffes les thermodynamica. Echt geen zin in!"
+            }
+          ],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "image",
               "user": "other",
               "character": "gebruiker",
-              "text": "Can I have this?"
+              "src": "./assets/scenario-1/meme2.jpg",
+              "id": 4
+            },
+            {
+              "type": "image",
+              "user": "other",
+              "character": "gebruiker",
+              "src": "./assets/scenario-1/meme3.jpg",
+              "id": 4
+            },
+            {
+              "type": "image",
+              "user": "other",
+              "character": "gebruiker",
+              "src": "./assets/scenario-1/meme4.jpg",
+              "id": 4
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Het is heel moeilijk te combineren maar ik studeer Industriële Wetenschappen aan UGent!"
+            }
+          ],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Hopelijk zit de wind wat mee 😉⛵️",
+              "id": 5
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Je hebt een bronzen medaille op de olympische spelen, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "id": 5
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "😂😂😂"
+            }
+          ],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Continue"
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Tot nu toe heeft de wind gelukkig altijd wel meegezeten 💭💭💭💭"
+            },
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "💭💭💭"
+            },
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "💭💭"
+            },
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "💭"
+            }
+          ],
+          "outro": []
+        },
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Hopelijk zit de wind wat mee 😉⛵️",
+              "id": 5
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "Je hebt een bronzen medaille op de olympische spelen, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "id": 5
+            }
+          ],
+          "replies": [
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Het is mega moeilijk te combineren eh, maar ik studeer Industriële wetenschappen aan de Universiteit van Gent! 🤓"
+            },
+            {
+              "type": "message",
+              "user": "character",
+              "character": "emma",
+              "text": "Vandaag Thermodynamica, echt geen zin in!! 🙄"
             }
           ],
           "outro": []

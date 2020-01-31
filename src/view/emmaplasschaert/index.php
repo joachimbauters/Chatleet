@@ -20,10 +20,9 @@
       </div>
     </div>
     <div class="answers_list">
-      <ul class="answers flex_column">
+      <ul class="answers">
 
       </ul>
-
     </div>
   </section>
   </main>

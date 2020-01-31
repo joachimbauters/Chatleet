@@ -12,6 +12,10 @@ html {
   box-sizing: inherit;
 }
 
+.wf-sfprodisplay-n4-active body {
+  font-family: "SFProDisplay", "Arial", sans-serif;
+}
+
 a {
   text-decoration: none;
   color: var(--color-black);
@@ -230,21 +234,44 @@ button {
   border: 0.2rem solid green;
 }
 
-.dialoog_message {
+.dialoog_message_character {
   text-align: left;
   background-color: var(--color-lightgray);
   padding: 1.5rem 1rem;
   border-radius: 1.5rem;
+  max-width: 27rem;
 }
 
-.dialoog_message p {
+.dialoog_message_other {
+  text-align: left;
+  background-color: var(--color-black);
+  padding: 1.5rem 1rem;
+  border-radius: 1.5rem;
+  max-width: 27rem;
+}
+
+.dialoog_message_character p {
   font-size: 1.4rem;
+}
+
+.dialoog_message_other p {
+  font-size: 1.4rem;
+  color: var(--color-white);
 }
 
 .is-image {
   padding: 0;
   overflow: hidden;
   width: 23rem;
+}
+
+.is-link {
+  font-size: 1.4rem;
+  text-decoration: underline;
+}
+
+.is-link a {
+  color: var(--color-white);
 }
 
 .answers_list {
@@ -267,15 +294,31 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 1.5rem;
+  font-size: 1.4rem;
   width: 100%;
+}
+
+.answer_item {
+  flex: 0 0 auto;
 }
 
 .answers .answer_item:not(:last-child) {
   margin-bottom: 1rem;
 }
 
-.answer {
-  font-size: 1.4rem;
+.answers .is-imgchoice {
+  margin-right: 2rem;
+}
+
+.flex_row_choices_image {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.choice_img {
+  width: 15rem;
 }
 
 .main_grid {

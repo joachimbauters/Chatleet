@@ -7,6 +7,9 @@ import "phaser";
   let stories;
   let story;
   let dialogueCount = 0;
+  let currentDialogue;
+  const $answerbox = document.querySelector(`.answers`);
+  const $chatbox = document.querySelector(`.messages`);
 
   const parse = data => {
     stories = data.stories;
@@ -18,6 +21,8 @@ import "phaser";
   const createStory = story => {
     const $ul = document.querySelector(`.stories`);
     const $li = document.createElement(`li`);
+    console.log(stories);
+
     $li.classList.add(`story`);
     $li.innerHTML = `
       <a href="index.php?page=${story.name.link}">
@@ -39,7 +44,6 @@ import "phaser";
   const parseStory = data => {
     story = data.scenarios.scenario_1;
     const $naam = document.querySelector(`.chat_head_name`);
-    const $chatbox = document.querySelector(`.messages`);
     if ($naam) {
       $naam.innerHTML = story.ontvanger;
     }
@@ -50,23 +54,18 @@ import "phaser";
     });
 
     createAnswersAndResponses(story.dialogues);
-
     setHeightChat();
-    scrollToBottomMessages();
   };
 
   const createAnswersAndResponses = dialogues => {
-    const $answerbox = document.querySelector(`.answers`);
     $answerbox.innerHTML = ``;
-    const currentDialogue = dialogues[dialogueCount];
-    console.log(dialogueCount);
-    console.log(currentDialogue);
+    currentDialogue = dialogues[dialogueCount];
 
     if (!currentDialogue) {
       return;
     }
 
-    currentDialogue.choices.forEach((choice, i) => {
+    currentDialogue.choices.forEach(choice => {
       const $choice = createChoice(choice);
       $answerbox.appendChild($choice);
     });
@@ -78,38 +77,104 @@ import "phaser";
   };
 
   const handleClickAnswer = e => {
-    console.log(e.currentTarget);
-    dialogueCount++;
+    dialogueCount = e.currentTarget.dataset.id;
     createAnswersAndResponses(story.dialogues);
+
+    const answer = e.currentTarget.innerHTML;
+    console.log(answer);
+
+    if (answer === "Continue") {
+      return;
+    } else {
+      const $li = document.createElement(`li`);
+      $li.innerHTML = `
+          <div class="dialoog other">
+            <div class="dialoog_message_other">
+              <p>${answer}</p>
+            </div>
+          </div>
+          `;
+      $chatbox.appendChild($li);
+    }
+
+    if (!currentDialogue) {
+      return;
+    }
+
+    currentDialogue.replies.forEach(reply => {
+      const $reply = createMessage(reply);
+      $chatbox.appendChild($reply);
+    });
+
+    scrollToBottomMessages();
+    setHeightChat();
   };
 
-  const createMessage = premise => {
+  const createMessage = message => {
     const $li = document.createElement(`li`);
-    switch (premise.type) {
+    switch (message.type) {
       case `message`:
-        $li.innerHTML = `
-        <div class="dialoog ${premise.user}">
-          <div class="dialoog_avatar avatar_${premise.user}">
-            <img src="./assets/${premise.character}.jpg" class="img_responsive">
+        message.user === "character"
+          ? ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+          <div class="dialoog_avatar avatar_${message.user}">
+            <img src="./assets/${message.character}.jpg" class="img_responsive">
           </div>
-          <div class="dialoog_message">
-            <p>${premise.text}</p>
+          <div class="dialoog_message_${message.user}">
+            <p>${message.text}</p>
           </div>
         </div>
-        `;
+        `)
+          : ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+          <div class="dialoog_message_${message.user}">
+            <p>${message.text}</p>
+          </div>
+        </div>
+        `);
         return $li;
         break;
       case `image`:
-        $li.innerHTML = `
-        <div class="dialoog ${premise.user}">
-          <div class="dialoog_avatar avatar_${premise.user}">
-            <img src="./assets/${premise.character}.jpg" class="img_responsive">
+        message.user === "character"
+          ? ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+          <div class="dialoog_avatar avatar_${message.user}">
+            <img src="./assets/${message.character}.jpg" class="img_responsive">
           </div>
           <div class="dialoog_message is-image">
-            <img src="${premise.src}" class="img_responsive">
+            <img src="${message.src}" class="img_responsive">
           </div>
         </div>
-        `;
+        `)
+          : ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+          <div class="dialoog_message is-image">
+            <img src="${message.src}" class="img_responsive">
+          </div>
+        </div>
+        `);
+        return $li;
+        break;
+      case `link`:
+        message.user === "character"
+          ? ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+          <div class="dialoog_avatar avatar_${message.user}">
+            <img src="./assets/${message.character}.jpg" class="img_responsive">
+          </div>
+          <div class="dialoog_message_${message.user} is-link">
+            <a href="${message.link}" target="_blank">${message.link}</a>
+          </div>
+        </div>
+        `)
+          : ($li.innerHTML = `
+        <div class="dialoog ${message.user}">
+
+          <div class="dialoog_message_${message.user} is-link">
+            <a href="${message.link}" target="_blank">${message.link}</a>
+          </div>
+        </div>
+        `);
         return $li;
         break;
     }
@@ -120,15 +185,43 @@ import "phaser";
       return;
     }
 
+    const $ul = document.querySelector(`.answers`);
+    $ul.classList.remove("flex_row_choices_image");
+
     const $li = document.createElement(`li`);
     $li.classList = `answer_item`;
     switch (dialogue.type) {
       case `message`:
         $li.innerHTML = `
         <button type="button" class="dialoog_btn" data-id="${dialogue.id}">
-          <p class="answer">${dialogue.text}</p>
+          ${dialogue.text}
         </button>
         `;
+        return $li;
+        break;
+      case `image`:
+        $ul.classList.add("flex_row_choices_image");
+
+        $li.innerHTML = `
+        <button type="button" class="dialoog_btn" data-id="${dialogue.id}">
+          <img src="${dialogue.src}" class="img_responsive choice_img">
+        </button>
+        `;
+
+        $li.classList = `is-imgchoice`;
+        return $li;
+        break;
+
+      case `video`:
+        $li.innerHTML = `
+        <button type="button" class="dialoog_btn" data-id="${dialogue.id}">
+          <video class="img_responsive" autoplay loop>
+            <source src="${dialogue.src}" type="video/mp4">
+          </video>
+        </button>
+        `;
+
+        $li.classList = `is-videochoice`;
         return $li;
         break;
     }
@@ -145,12 +238,17 @@ import "phaser";
 
   const scrollToBottomMessages = () => {
     const $msgs = document.querySelector(`.dialoog_scroll`);
-    $msgs.scrollTop = $msgs.scrollHeight;
+    const $list = document.querySelector(`.dialoog_list`);
+    console.log($msgs.scrollHeight);
+
+    console.log($answerbox.offsetHeight);
+
+    $msgs.scrollTop = $list.scrollHeight;
   };
 
   const init = () => {
-    //new Game1();
-    //new Game2();
+    // new Game1();
+    // new Game2();
 
     const naam = "emmaplasschaert";
     const url = `./assets/data/stories.json`;

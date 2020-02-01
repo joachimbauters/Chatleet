@@ -14,11 +14,12 @@ html {
 
 .wf-sfprodisplay-n4-active body {
   font-family: "SFProDisplay", "Arial", sans-serif;
+  background-color: var(--color-black);
 }
 
 a {
   text-decoration: none;
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 button {
@@ -26,14 +27,40 @@ button {
   cursor: pointer;
 }
 
-.heading-1 {
-  font-size: 2.8rem;
+.hide {
+  display: none;
+}
+
+.wf-nikkyou-n4-active .logo_bijtext {
+  -webkit-text-stroke: 0.1rem var(--color-white);
+  font-size: 3.6rem;
+  font-family: "nikkyou", "Arial", sans-serif;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.wf-madeoutline-n4-active .logo_outline {
+  font-family: "madeoutline", "Arial", sans-serif;
+}
+
+.wf-made-n4-active .heading-1 {
+  font-size: 4.8rem;
   font-weight: bold;
+  color: var(--color-white);
+  font-family: "made", "Arial", sans-serif;
+  font-style: italic;
+  letter-spacing: 0.2rem;
 }
 
 .heading-2 {
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: medium;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.green_accent {
+  color: var(--color-green);
 }
 
 .flex_row {
@@ -88,16 +115,108 @@ button {
   }
 }
 
-.story_card {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: 5rem 1fr;
-  padding: 1rem;
+.header_flex_stories {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  z-index: 999;
+}
+
+.stories .story:first-child {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.stories .story:nth-child(2) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.2s forwards;
+}
+
+.message_intro {
+  height: 18rem;
+}
+
+.message_intro .spinner {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.message_intro .dialoog {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.messages .dialoog {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.messages .spinner {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.green_background {
+  width: 40rem;
+  height: 40rem;
+  background-color: var(--color-green);
+  background: linear-gradient(
+    100deg,
+    rgba(132, 255, 0, 0.46) -50.61%,
+    rgba(132, 255, 0, 0) 80.79%
+  );
+  border-radius: 50%;
+  position: relative;
+  z-index: -1;
+  margin-top: -40rem;
+  transform: translateX(-10rem);
+}
+
+.story {
+  padding: 1rem 1rem 2rem 1rem;
   cursor: pointer;
+  background-color: var(--color-darkgray);
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 
   &:hover {
     background-color: var(--color-lightgray);
   }
+}
+
+.story_card {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 5rem 5fr 1fr;
+}
+
+.extra_info {
+  display: grid;
+}
+
+.read_indicator {
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--color-green);
+  border-radius: 50%;
+  align-self: center;
+  justify-self: flex-end;
+}
+
+.story_duration {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 300;
+  font-size: 1.4rem;
+
+  &::before {
+    content: "";
+    display: block;
+    background-image: url("./assets/time_icon.svg");
+    background-repeat: no-repeat;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+}
+
+.story:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .story_naam {
@@ -122,57 +241,112 @@ button {
   grid-row: 1 / -1;
 }
 
-.online {
-  background: #2ecc71;
-  grid-column: 1 / 2;
-  grid-row: 1 / -1;
-  position: relative;
+.inbox {
+  margin-top: -3.5rem;
+}
+
+.games {
   z-index: 999;
 }
 
-.contact-status {
-  border: 0.12rem solid white;
-  border-radius: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
+.game_item {
+  margin-right: 1rem;
+  width: 15rem;
 }
 
-.read_status {
-  font-size: 1.4rem;
-  font-weight: 500;
+.game {
+  display: grid;
+
+  &::before {
+    content: "";
+    background-image: linear-gradient(
+      32.55deg,
+      rgba(132, 255, 0, 0.67) -5.48%,
+      rgba(132, 255, 0, 0) 71.52%
+    );
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    z-index: 4;
+  }
 }
 
-.read_status span {
-  font-weight: bold;
+.game_image {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  z-index: -1;
+  filter: grayscale(100%);
 }
 
-.flex_inbox {
-  justify-content: space-between;
+.game_text {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  z-index: 4;
+}
+
+.sporza_footer {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  height: 20rem;
+  overflow-x: hidden;
+  position: relative;
+  z-index: -1;
+  margin-top: -15rem;
+  overflow-y: hidden;
+}
+
+.sporza {
+  animation: rotate-center 24s linear infinite both;
+  width: 20rem;
+  margin-right: -5rem;
+}
+
+@keyframes rotate-center {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 /*story*/
 
-.back {
-  grid-column: 1 / -1;
+.back_flex {
+  grid-column: 1 / 2;
   grid-row: 1 / -1;
+  align-self: center;
 }
 
-.back a {
-  font-size: 1.4rem;
+.back {
+  &::before {
+    content: "";
+    display: block;
+    background-image: url("./assets/back.svg");
+    background-repeat: no-repeat;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+  }
 }
 
 .chat_head_grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr max-content 1fr;
+  height: 100%;
 }
 
 .chat_head {
-  background-color: var(--color-lightgray);
-  height: 11rem;
+  background-color: var(--color-black);
+  height: 9rem;
+  box-shadow: 0 2.5rem 3.4rem 0 rgba(0, 0, 0, 1);
+  align-self: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  z-index: 999;
 }
 
 .chat_head_profile {
-  grid-column: 1 / -1;
+  grid-column: 2 / 3;
   grid-row: 1 / -1;
   display: flex;
   flex-flow: column nowrap;
@@ -185,11 +359,13 @@ button {
 }
 
 .chat_head_name {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  color: var(--color-white);
+  font-weight: 600;
 }
 
 .dialoog_scroll {
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 9rem);
   overflow-y: scroll;
 
   @media (--xl) {
@@ -198,7 +374,7 @@ button {
 }
 
 .dialoog_list {
-  padding: 1rem;
+  padding: 4rem 1rem;
 }
 
 .dialoog {
@@ -207,6 +383,8 @@ button {
   align-items: flex-end;
   margin-bottom: 2rem;
   width: 100%;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 }
 
 .other {
@@ -214,16 +392,16 @@ button {
 }
 
 .avatar_character {
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .avatar_other {
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .dialoog_avatar {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -231,32 +409,33 @@ button {
 
 .dialoog_avatar img {
   border-radius: 50%;
-  border: 0.2rem solid green;
 }
 
 .dialoog_message_character {
   text-align: left;
-  background-color: var(--color-lightgray);
-  padding: 1.5rem 1rem;
-  border-radius: 1.5rem;
+  background-color: transparent;
+  border: 0.2rem solid var(--color-white);
+  padding: 1rem 1.5rem;
   max-width: 27rem;
 }
 
 .dialoog_message_other {
   text-align: left;
-  background-color: var(--color-black);
-  padding: 1.5rem 1rem;
-  border-radius: 1.5rem;
+  background-color: var(--color-white);
+  padding: 1rem 1.5rem;
   max-width: 27rem;
 }
 
 .dialoog_message_character p {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: var(--color-white);
 }
 
 .dialoog_message_other p {
-  font-size: 1.4rem;
-  color: var(--color-white);
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: var(--color-black);
 }
 
 .is-image {
@@ -274,14 +453,78 @@ button {
   color: var(--color-white);
 }
 
+.spinner {
+  border: 0.2rem solid var(--color-white);
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  height: 4rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+@-webkit-keyframes animShow {
+  0% {
+    transform: translate3d(0, 20px, 0);
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+.spinner > div {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 100%;
+  -webkit-animation: sk-bouncedelay 0.5s ease alternate infinite;
+  animation: sk-bouncedelay 0.5s ease alternate infinite;
+  background: rgb(255, 255, 255);
+}
+
+.spinner > div:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
 .answers_list {
   position: absolute;
-  background-color: blue;
+  background-color: var(--color-darkgray);
   padding: 2rem;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  border-radius: 2rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   @media (--xl) {
     display: none;
@@ -289,17 +532,42 @@ button {
 }
 
 .dialoog_btn {
-  padding: 2rem;
-  background-color: var(--color-white);
-  border: none;
+  padding: 1.5rem 1rem;
+  background-color: transparent;
+  border: 0.1rem solid var(--color-green);
   cursor: pointer;
-  border-radius: 1.5rem;
-  font-size: 1.4rem;
   width: 100%;
+  color: var(--color-white);
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: left;
+
+  &:active {
+    background-color: var(--color-green);
+    color: var(--color-white);
+  }
+
+  &:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+  }
 }
 
 .answer_item {
   flex: 0 0 auto;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.answers .answer_item:first-child {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.answers .answer_item:nth-child(2) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.3s forwards;
+}
+.answers .answer_item:nth-child(3) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.6s forwards;
 }
 
 .answers .answer_item:not(:last-child) {
@@ -308,6 +576,7 @@ button {
 
 .answers .is-imgchoice {
   margin-right: 2rem;
+  height: 27rem;
 }
 
 .flex_row_choices_image {

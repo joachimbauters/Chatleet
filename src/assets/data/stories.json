@@ -9,7 +9,9 @@
       },
       "picture": {
         "thumbnail": "./assets/emma.jpg"
-      }
+      },
+      "premise": "Emma heeft een foto gestuurd",
+      "storyduration": 5
     },
     {
       "gender": "vrouw",
@@ -20,7 +22,9 @@
       },
       "picture": {
         "thumbnail": "./assets/jolien.jpg"
-      }
+      },
+      "premise": "Jolien heeft een foto gestuurd",
+      "storyduration": 5
     }
   ]
 }

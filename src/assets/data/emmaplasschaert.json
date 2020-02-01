@@ -7,13 +7,15 @@
           "type": "message",
           "user": "character",
           "character": "emma",
-          "text": "Laat het zeilen maar komen!! ⛵️💪"
+          "text": "Laat het zeilen maar komen!! ⛵️💪",
+          "delay": 1000
         },
         {
           "type": "image",
           "user": "character",
           "character": "emma",
-          "src": "./assets/scenario-1/selfie.png"
+          "src": "./assets/scenario-1/selfie.png",
+          "delay": 3000
         }
       ],
       "dialogues": [

@@ -4,7 +4,7 @@
   src: url("madeitalic.woff2") format("woff2"),
     url("madeitalic.woff") format("woff");
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   src: url("madeoutlineitalic.woff2") format("woff2"),
     url("madeoutlineitalic.woff") format("woff");
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 
 @font-face {

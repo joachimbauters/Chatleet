@@ -47,7 +47,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
-    "phaser": "^3.22.0",
-    "siema": "^1.5.1"
+    "@tweenjs/tween.js": "^18.5.0",
+    "flickity": "^2.2.1",
+    "phaser": "^3.22.0"
   }
 }

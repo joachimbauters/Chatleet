@@ -1,5 +1,7 @@
 import "./style.css";
 import "phaser";
+import Flickity from "flickity";
+import TWEEN from "@tweenjs/tween.js";
 // import Game1 from "./classes/game1/Game.js";
 // import Game2 from "./classes/game2/Game.js";
 
@@ -11,37 +13,10 @@ import "phaser";
   const $answerbox = document.querySelector(`.answers`);
   const $chatbox = document.querySelector(`.messages`);
 
-  const parse = data => {
-    stories = data.stories;
-    stories.forEach(story => {
-      createStory(story);
-    });
-  };
-
-  const createStory = story => {
-    const $ul = document.querySelector(`.stories`);
-    const $li = document.createElement(`li`);
-    console.log(stories);
-
-    $li.classList.add(`story`);
-    $li.innerHTML = `
-      <a href="index.php?page=${story.name.link}">
-        <div class="story_card">
-          <span class="contact-status online"></span>
-          <img src="${story.picture.thumbnail}" alt="${story.name.voornaam} ${story.name.achternaam}" class="img_responsive story_img"/>
-          <div class="meta">
-            <h3 class="story_naam">${story.name.voornaam} ${story.name.achternaam}</h3>
-            <p class="story_bijtext">text</p>
-          </div>
-        </div>
-      </a>
-    `;
-    if ($ul) {
-      $ul.appendChild($li);
-    }
-  };
-
   const parseStory = data => {
+    if (!$chatbox) {
+      return;
+    }
     story = data.scenarios.scenario_1;
     const $naam = document.querySelector(`.chat_head_name`);
     if ($naam) {
@@ -49,12 +24,104 @@ import "phaser";
     }
 
     story.premise.forEach(premise => {
-      const $message = createMessage(premise);
-      $chatbox.appendChild($message);
+      setTimeout(() => {
+        const $loader = messageLoading();
+        $chatbox.appendChild($loader);
+        setTimeout(() => {
+          $chatbox.removeChild($loader);
+          const $message = createMessage(premise);
+          $chatbox.appendChild($message);
+        }, 1000);
+      }, premise.delay);
     });
 
     createAnswersAndResponses(story.dialogues);
     setHeightChat();
+  };
+
+  const messageLoading = () => {
+    const $li = document.createElement(`li`);
+    $li.classList.add("spinner");
+    $li.innerHTML = `
+      <div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div>
+    `;
+    return $li;
+  };
+
+  const parse = data => {
+    stories = data.stories;
+    stories.forEach(character => {
+      createStory(character);
+    });
+  };
+
+  const createIntro = () => {
+    const $ul = document.querySelector(".message_intro");
+
+    setTimeout(() => {
+      const $li = document.createElement(`li`);
+      $li.classList.add("spinner");
+      $li.innerHTML = `
+      <div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div>
+    `;
+      if ($ul) {
+        $ul.appendChild($li);
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      $ul.innerHTML = ``;
+      const $li = document.createElement(`li`);
+      $li.classList.add("dialoog");
+      $li.classList.add("charactre");
+      $li.innerHTML = `
+        <div class="dialoog_message_character">
+          <p>Yoo, what’s up? Chat met onze Belgische atleten en unlock de ultieme challenge!</p>
+        </div>
+    `;
+      if ($ul) {
+        $ul.appendChild($li);
+      }
+    }, 3000);
+
+    setTimeout(() => {
+      const $li = document.createElement(`li`);
+      $li.classList.add("dialoog");
+      $li.classList.add("other");
+      $li.innerHTML = `
+        <div class="dialoog_message_other">
+          <p>Bring it on!</p>
+        </div>
+    `;
+      if ($ul) {
+        $ul.appendChild($li);
+      }
+    }, 5000);
+  };
+
+  const createStory = character => {
+    const $ul = document.querySelector(`.stories`);
+    const $li = document.createElement(`li`);
+
+    $li.classList.add(`story`);
+    $li.innerHTML = `
+      <a href="index.php?page=${character.name.link}">
+        <p class="story_duration">${character.storyduration} min</p>
+        <div class="story_card">
+          <img src="${character.picture.thumbnail}" alt="${character.name.voornaam} ${character.name.achternaam}" class="img_responsive story_img"/>
+          <div class="meta">
+            <h3 class="story_naam">${character.name.voornaam} ${character.name.achternaam}</h3>
+            <p class="story_bijtext">${character.premise}</p>
+          </div>
+          <div class="extra_info">
+            <div class="read_indicator"></div>
+          </div>
+        </div>
+      </a>
+    `;
+    if ($ul) {
+      $ul.appendChild($li);
+    }
   };
 
   const createAnswersAndResponses = dialogues => {
@@ -70,111 +137,131 @@ import "phaser";
       $answerbox.appendChild($choice);
     });
 
+    const elem = document.querySelector(".main-carousel");
+    if (elem) {
+      new Flickity(elem, {
+        cellAlign: "left",
+        draggable: true,
+        prevNextButtons: false,
+        pageDots: false
+      });
+    }
+
     const $btns = document.querySelectorAll(".dialoog_btn");
     $btns.forEach(btn => {
       btn.addEventListener("click", handleClickAnswer);
+      setHeightChat();
     });
   };
 
   const handleClickAnswer = e => {
+    e.currentTarget.style.backgroundColor = "#84ff00";
+    e.currentTarget.style.color = "black";
     dialogueCount = e.currentTarget.dataset.id;
-    createAnswersAndResponses(story.dialogues);
-
     const answer = e.currentTarget.innerHTML;
-    console.log(answer);
+    setTimeout(() => {
+      createAnswersAndResponses(story.dialogues);
 
-    if (answer === "Continue") {
-      return;
-    } else {
-      const $li = document.createElement(`li`);
-      $li.innerHTML = `
-          <div class="dialoog other">
-            <div class="dialoog_message_other">
-              <p>${answer}</p>
-            </div>
-          </div>
-          `;
-      $chatbox.appendChild($li);
-    }
+      if (answer === "Continue") {
+        return;
+      } else {
+        const $li = document.createElement(`li`);
+        $li.innerHTML = `
+              <div class="dialoog_message_other">
+                <p>${answer}</p>
+              </div>
+            `;
 
-    if (!currentDialogue) {
-      return;
-    }
+        $li.classList.add("dialoog");
+        $li.classList.add("other");
+        $chatbox.appendChild($li);
+      }
 
-    currentDialogue.replies.forEach(reply => {
-      const $reply = createMessage(reply);
-      $chatbox.appendChild($reply);
-    });
+      if (!currentDialogue) {
+        return;
+      }
 
-    scrollToBottomMessages();
-    setHeightChat();
+      currentDialogue.replies.forEach(reply => {
+        const $reply = createMessage(reply);
+        $chatbox.appendChild($reply);
+      });
+      setHeightChat();
+    }, 500);
   };
 
   const createMessage = message => {
     const $li = document.createElement(`li`);
     switch (message.type) {
       case `message`:
-        message.user === "character"
-          ? ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
-          <div class="dialoog_avatar avatar_${message.user}">
-            <img src="./assets/${message.character}.jpg" class="img_responsive">
-          </div>
-          <div class="dialoog_message_${message.user}">
-            <p>${message.text}</p>
-          </div>
-        </div>
-        `)
-          : ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
-          <div class="dialoog_message_${message.user}">
-            <p>${message.text}</p>
-          </div>
-        </div>
-        `);
+        if (message.user === "character") {
+          $li.innerHTML = `
+            <div class="dialoog_avatar avatar_${message.user}">
+              <img src="./assets/${message.character}.jpg" class="img_responsive">
+            </div>
+            <div class="dialoog_message_${message.user}">
+              <p>${message.text}</p>
+            </div>
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        } else {
+          $li.innerHTML = `
+            <div class="dialoog_message_${message.user}">
+              <p>${message.text}</p>
+            </div>
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        }
         return $li;
         break;
       case `image`:
-        message.user === "character"
-          ? ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
+        if (message.user === "character") {
+          $li.innerHTML = `
           <div class="dialoog_avatar avatar_${message.user}">
             <img src="./assets/${message.character}.jpg" class="img_responsive">
           </div>
           <div class="dialoog_message is-image">
             <img src="${message.src}" class="img_responsive">
           </div>
-        </div>
-        `)
-          : ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
+
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        } else {
+          $li.innerHTML = `
+
           <div class="dialoog_message is-image">
             <img src="${message.src}" class="img_responsive">
           </div>
-        </div>
-        `);
+
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        }
         return $li;
         break;
       case `link`:
-        message.user === "character"
-          ? ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
+        if (message.user === "character") {
+          $li.innerHTML = `
           <div class="dialoog_avatar avatar_${message.user}">
             <img src="./assets/${message.character}.jpg" class="img_responsive">
           </div>
           <div class="dialoog_message_${message.user} is-link">
             <a href="${message.link}" target="_blank">${message.link}</a>
           </div>
-        </div>
-        `)
-          : ($li.innerHTML = `
-        <div class="dialoog ${message.user}">
-
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        } else {
+          $li.innerHTML = `
           <div class="dialoog_message_${message.user} is-link">
             <a href="${message.link}" target="_blank">${message.link}</a>
           </div>
-        </div>
-        `);
+          `;
+          $li.classList.add("dialoog");
+          $li.classList.add(message.user);
+        }
         return $li;
         break;
     }
@@ -200,7 +287,7 @@ import "phaser";
         return $li;
         break;
       case `image`:
-        $ul.classList.add("flex_row_choices_image");
+        $ul.classList.add("main-carousel");
 
         $li.innerHTML = `
         <button type="button" class="dialoog_btn" data-id="${dialogue.id}">
@@ -208,7 +295,8 @@ import "phaser";
         </button>
         `;
 
-        $li.classList = `is-imgchoice`;
+        $li.classList.add(`is-imgchoice`);
+        $li.classList.add("carousel-cell");
         return $li;
         break;
 
@@ -234,16 +322,20 @@ import "phaser";
     if ($answers && $dialoog) {
       $dialoog.style.marginBottom = `${$answers.offsetHeight}px`;
     }
+
+    scrollToBottomMessages();
+  };
+
+  window.onload = function() {
+    setHeightChat();
   };
 
   const scrollToBottomMessages = () => {
     const $msgs = document.querySelector(`.dialoog_scroll`);
-    const $list = document.querySelector(`.dialoog_list`);
-    console.log($msgs.scrollHeight);
-
-    console.log($answerbox.offsetHeight);
-
-    $msgs.scrollTop = $list.scrollHeight;
+    $msgs.scroll({
+      top: $msgs.scrollHeight - $msgs.clientHeight,
+      behavior: "smooth"
+    });
   };
 
   const init = () => {
@@ -253,17 +345,31 @@ import "phaser";
     const naam = "emmaplasschaert";
     const url = `./assets/data/stories.json`;
     const url2 = `./assets/data/${naam}.json`;
-    fetch(url)
-      .then(r => r.json())
-      .then(jsonData => {
-        parse(jsonData);
-      });
 
     fetch(url2)
       .then(r => r.json())
       .then(jsonData => {
         parseStory(jsonData);
       });
+
+    fetch(url)
+      .then(r => r.json())
+      .then(jsonData => {
+        parse(jsonData);
+      });
+
+    createIntro();
+
+    const elem = document.querySelector(".main-carousel");
+    if (elem) {
+      new Flickity(elem, {
+        // options
+        cellAlign: "left",
+        draggable: true,
+        prevNextButtons: false,
+        pageDots: false
+      });
+    }
   };
 
   init();

@@ -1,9 +1,9 @@
 <div class="main_grid">
   <div class="desktop_mobileinside">
   <header class="chat_head">
-    <div class="wrapper_inside chat_head_grid">
-      <div class="back">
-        <a href="index.php">Back</a>
+    <div class="chat_head_grid">
+      <div class="back_flex">
+        <a href="index.php" class="back"><span class="hide">Back</span></a>
       </div>
       <div class="chat_head_profile">
         <img src="./assets/emma.jpg" alt="emma Plaschaert" class="img_responsive story_img">

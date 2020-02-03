@@ -1,3 +1,5 @@
+<div class="fullstory_scroll">
+<div class="fullstory"></div>
 <div class="main_grid">
   <div class="desktop_mobileinside">
   <header class="chat_head">
@@ -32,4 +34,5 @@
       <img src="./assets/device2.png" alt="device" class="img_responsive">
     </div>
   </div>
+</div>
 </div>

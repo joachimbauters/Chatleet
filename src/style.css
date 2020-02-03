@@ -12,6 +12,10 @@ html {
   box-sizing: inherit;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .wf-sfprodisplay-n4-active body {
   font-family: "SFProDisplay", "Arial", sans-serif;
   background-color: var(--color-black);
@@ -160,10 +164,10 @@ button {
     rgba(132, 255, 0, 0) 80.79%
   );
   border-radius: 50%;
-  position: relative;
+  position: absolute;
   z-index: -1;
   margin-top: -40rem;
-  transform: translateX(-10rem);
+  transform: translateX(-11rem);
 }
 
 .story {
@@ -477,6 +481,16 @@ button {
   }
 }
 
+@-webkit-keyframes animShow2 {
+  0% {
+    height: 0;
+  }
+
+  to {
+    height: auto;
+  }
+}
+
 .spinner > div {
   width: 1.2rem;
   height: 1.2rem;
@@ -525,6 +539,8 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
+  height: 0;
+  animation: animShow2 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
 
   @media (--xl) {
     display: none;
@@ -619,6 +635,85 @@ button {
     align-self: center;
     pointer-events: none;
   }
+}
+
+.threecanvas {
+  height: 100%;
+  pointer-events: none;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+}
+
+#c {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gradient {
+  position: relative;
+  z-index: -1;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 10%,
+    rgba(136, 255, 224, 1) 95%
+  );
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+}
+
+.fullstory_scroll {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.horizon_img {
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
+}
+
+.fullstory_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20rem 500rem;
+}
+
+.swipe {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.fullstory_scroll .swipe {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.6s forwards;
+}
+
+.wf-made-n4-active .swipe p {
+  color: var(--color-white);
+  font-size: 4rem;
+  font-family: "made", "Arial", sans-serif;
+  text-align: center;
+  font-style: italic;
+}
+
+.wf-madeoutline-n4-active .swipe p span {
+  color: var(--color-white);
+  font-family: "madeoutline", "Arial", sans-serif;
+  font-style: italic;
+}
+
+.no_pointerevents {
+  pointer-events: none;
 }
 
 .phaserGame {

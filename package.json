@@ -49,6 +49,7 @@
     "@babel/runtime": "^7.1.5",
     "@tweenjs/tween.js": "^18.5.0",
     "flickity": "^2.2.1",
-    "phaser": "^3.22.0"
+    "phaser": "^3.22.0",
+    "three": "^0.113.2"
   }
 }

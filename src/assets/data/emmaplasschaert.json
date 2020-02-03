@@ -15,7 +15,7 @@
           "user": "character",
           "character": "emma",
           "src": "./assets/scenario-1/selfie.png",
-          "delay": 3000
+          "delay": 4000
         }
       ],
       "dialogues": [
@@ -61,19 +61,22 @@
               "type": "image",
               "user": "character",
               "character": "emma",
-              "src": "./assets/scenario-1/meme1.jpg"
+              "src": "./assets/scenario-1/meme1.jpg",
+              "delay": 1000
             },
             {
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Tijdens het studeren luister ik altijd naar de Sporza podcast haha, mss is het een tip voor jou? 😀"
+              "text": "Tijdens het studeren luister ik altijd naar de Sporza podcast haha, mss is het een tip voor jou? 😀",
+              "delay": 4000
             },
             {
               "type": "link",
               "user": "character",
               "character": "emma",
-              "link": "https://sporza.be/nl/sporza-podcast/"
+              "link": "https://sporza.be/nl/sporza-podcast/",
+              "delay": 7000
             }
           ],
           "outro": []
@@ -93,13 +96,15 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Hahaha 😂"
+              "text": "Hahaha 😂",
+              "delay": 1000
             },
             {
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Seffes les thermodynamica. Echt geen zin in!"
+              "text": "Seffes les thermodynamica. Echt geen zin in!",
+              "delay": 4000
             }
           ],
           "outro": []
@@ -133,7 +138,8 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Het is heel moeilijk te combineren maar ik studeer Industriële Wetenschappen aan UGent!"
+              "text": "Het is heel moeilijk te combineren maar ik studeer Industriële Wetenschappen aan UGent!",
+              "delay": 1000
             }
           ],
           "outro": []
@@ -151,7 +157,7 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Je hebt een bronzen medaille op de olympische spelen, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan leske Thermo dynamica ook wel lukken wh 😝",
               "id": 5
             }
           ],
@@ -160,7 +166,8 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "😂😂😂"
+              "text": "😂😂😂",
+              "delay": 1000
             }
           ],
           "outro": []
@@ -179,25 +186,8 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Tot nu toe heeft de wind gelukkig altijd wel meegezeten 💭💭💭💭"
-            },
-            {
-              "type": "message",
-              "user": "character",
-              "character": "emma",
-              "text": "💭💭💭"
-            },
-            {
-              "type": "message",
-              "user": "character",
-              "character": "emma",
-              "text": "💭💭"
-            },
-            {
-              "type": "message",
-              "user": "character",
-              "character": "emma",
-              "text": "💭"
+              "text": "Tot nu toe heeft de wind gelukkig altijd wel meegezeten 💭💭💭💭",
+              "delay": 1000
             }
           ],
           "outro": []
@@ -215,7 +205,7 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Je hebt een bronzen medaille op de olympische spelen, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan leske Thermo dynamica ook wel lukken wh 😝",
               "id": 5
             }
           ],
@@ -224,13 +214,15 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Het is mega moeilijk te combineren eh, maar ik studeer Industriële wetenschappen aan de Universiteit van Gent! 🤓"
+              "text": "Het is mega moeilijk te combineren eh, maar ik studeer Industriële wetenschappen aan de Universiteit van Gent! 🤓",
+              "delay": 1000
             },
             {
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Vandaag Thermodynamica, echt geen zin in!! 🙄"
+              "text": "Vandaag Thermodynamica, echt geen zin in!! 🙄",
+              "delay": 4000
             }
           ],
           "outro": []

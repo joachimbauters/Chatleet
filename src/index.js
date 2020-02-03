@@ -1,7 +1,8 @@
 import "./style.css";
 import "phaser";
 import Flickity from "flickity";
-import TWEEN from "@tweenjs/tween.js";
+import * as THREE from "three";
+import { Water } from "./js/water.js";
 // import Game1 from "./classes/game1/Game.js";
 // import Game2 from "./classes/game2/Game.js";
 
@@ -25,25 +26,32 @@ import TWEEN from "@tweenjs/tween.js";
 
     story.premise.forEach(premise => {
       setTimeout(() => {
-        const $loader = messageLoading();
+        const $loader = messageLoading(premise.character);
         $chatbox.appendChild($loader);
         setTimeout(() => {
           $chatbox.removeChild($loader);
           const $message = createMessage(premise);
           $chatbox.appendChild($message);
-        }, 1000);
+        }, 2500);
       }, premise.delay);
     });
 
-    createAnswersAndResponses(story.dialogues);
-    setHeightChat();
+    setTimeout(() => {
+      createAnswersAndResponses(story.dialogues);
+      setHeightChat();
+    }, 8000);
   };
 
-  const messageLoading = () => {
+  const messageLoading = character => {
     const $li = document.createElement(`li`);
-    $li.classList.add("spinner");
+    $li.classList.add("dialoog");
     $li.innerHTML = `
-      <div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div>
+      <div class="dialoog_avatar avatar_character">
+        <img src="./assets/${character}.jpg" class="img_responsive">
+      </div>
+      <div class="spinner">
+        <div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div>
+      </div>
     `;
     return $li;
   };
@@ -70,7 +78,9 @@ import TWEEN from "@tweenjs/tween.js";
     }, 1000);
 
     setTimeout(() => {
-      $ul.innerHTML = ``;
+      if ($ul) {
+        $ul.innerHTML = ``;
+      }
       const $li = document.createElement(`li`);
       $li.classList.add("dialoog");
       $li.classList.add("charactre");
@@ -150,7 +160,6 @@ import TWEEN from "@tweenjs/tween.js";
     const $btns = document.querySelectorAll(".dialoog_btn");
     $btns.forEach(btn => {
       btn.addEventListener("click", handleClickAnswer);
-      setHeightChat();
     });
   };
 
@@ -159,33 +168,52 @@ import TWEEN from "@tweenjs/tween.js";
     e.currentTarget.style.color = "black";
     dialogueCount = e.currentTarget.dataset.id;
     const answer = e.currentTarget.innerHTML;
-    setTimeout(() => {
-      createAnswersAndResponses(story.dialogues);
 
-      if (answer === "Continue") {
+    setTimeout(() => {
+      currentDialogue = story.dialogues[dialogueCount];
+
+      $answerbox.innerHTML = ``;
+
+      if (!currentDialogue) {
+        transitionAnimation();
         return;
       } else {
         const $li = document.createElement(`li`);
         $li.innerHTML = `
-              <div class="dialoog_message_other">
-                <p>${answer}</p>
-              </div>
-            `;
+                <div class="dialoog_message_other">
+                  <p>${answer}</p>
+                </div>
+              `;
 
         $li.classList.add("dialoog");
         $li.classList.add("other");
         $chatbox.appendChild($li);
+        setHeightChat();
       }
 
       if (!currentDialogue) {
         return;
       }
 
+      const delay = currentDialogue.replies.slice(-1).pop();
       currentDialogue.replies.forEach(reply => {
-        const $reply = createMessage(reply);
-        $chatbox.appendChild($reply);
+        setTimeout(() => {
+          const $loader = messageLoading(reply.character);
+          $chatbox.appendChild($loader);
+          setHeightChat();
+          setTimeout(() => {
+            $chatbox.removeChild($loader);
+            const $reply = createMessage(reply);
+            $chatbox.appendChild($reply);
+            setHeightChat();
+          }, 2500);
+        }, reply.delay);
       });
-      setHeightChat();
+
+      setTimeout(() => {
+        createAnswersAndResponses(story.dialogues);
+        setHeightChat();
+      }, delay.delay + 3000);
     }, 500);
   };
 
@@ -332,10 +360,144 @@ import TWEEN from "@tweenjs/tween.js";
 
   const scrollToBottomMessages = () => {
     const $msgs = document.querySelector(`.dialoog_scroll`);
-    $msgs.scroll({
-      top: $msgs.scrollHeight - $msgs.clientHeight,
-      behavior: "smooth"
-    });
+    if ($msgs) {
+      $msgs.scroll({
+        top: $msgs.scrollHeight - $msgs.clientHeight,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  const scrollToBottomStory = () => {
+    const $fullstory = document.querySelector(`.fullstory_scroll`);
+    console.log($fullstory.scrollHeight);
+    console.log($fullstory.clientHeight);
+
+    if ($fullstory) {
+      $fullstory.scroll({
+        top: $fullstory.scrollHeight - $fullstory.clientHeight
+      });
+    }
+  };
+
+  const mainThreejs = canvas => {
+    const scene = new THREE.Scene();
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+
+    const fov = 75;
+    const aspect = 2; // the canvas default
+    const near = 0.1;
+    const far = 50;
+
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.z = 10;
+
+    {
+      const color = 0xffffff;
+      const intensity = 1;
+      const light = new THREE.DirectionalLight(color, intensity);
+      light.position.set(-1, 2, 4);
+      scene.add(light);
+    }
+
+    const boxWidth = 1;
+    const boxHeight = 1;
+    const boxDepth = 1;
+    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+    const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 }); // greenish blue
+
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    const resizeRendererToDisplaySize = renderer => {
+      const canvas = renderer.domElement;
+      const pixelRatio = window.devicePixelRatio;
+      const width = (canvas.clientWidth * pixelRatio) | 0;
+      const height = (canvas.clientHeight * pixelRatio) | 0;
+      const needResize = canvas.width !== width || canvas.height !== height;
+      if (needResize) {
+        renderer.setSize(width, height, false);
+      }
+      return needResize;
+    };
+
+    const render = time => {
+      time *= 0.001;
+
+      if (resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+      }
+
+      cube.rotation.x = time;
+      cube.rotation.y = time;
+
+      renderer.render(scene, camera);
+      renderer.setClearColor(0x000000, 0);
+
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+  };
+
+  const transitionAnimation = () => {
+    const $answerList = document.querySelector(`.answers_list`);
+    $answerList.classList.add(`hide`);
+
+    const $dialoogscroll = document.querySelector(`.dialoog_scroll`);
+    $dialoogscroll.classList.add(`no_pointerevents`);
+
+    //animatiecode
+
+    addNostalgia();
+  };
+
+  const addNostalgia = () => {
+    const $main = document.querySelector(`.fullstory`);
+
+    const $maindiv = document.createElement(`div`);
+    $maindiv.classList.add(`fullstory_grid`);
+
+    const $div = document.createElement(`div`);
+    const $div2 = document.createElement(`div`);
+    const $div3 = document.createElement(`div`);
+    $div3.classList.add(`horizon_img`);
+    const $img = document.createElement(`img`);
+    $img.src = `./assets/horizon-sky.jpg`;
+    $img.classList.add(`img_responsive`);
+    $div.classList.add(`gradient`);
+    $div2.classList.add(`threecanvas`);
+    const $canvas = document.createElement(`canvas`);
+    $canvas.id = `c`;
+
+    $div3.appendChild($img);
+    $maindiv.appendChild($div3);
+
+    $maindiv.appendChild($div);
+
+    $main.appendChild($maindiv);
+
+    $div2.appendChild($canvas);
+    $maindiv.appendChild($div2);
+
+    scrollToBottomStory();
+
+    mainThreejs($canvas);
+
+    const $swipe = document.createElement(`div`);
+    $swipe.classList.add(`swipe`);
+    const $swipeText = document.createElement(`p`);
+    $swipeText.innerHTML = `Swipe</br><span>down</span>`;
+    $swipe.appendChild($swipeText);
+
+    const $parent2 = document.querySelector(`.fullstory_scroll`);
+    $parent2.appendChild($swipe);
+
+    setTimeout(() => {
+      $parent2.removeChild($swipe);
+    }, 2500);
   };
 
   const init = () => {
@@ -361,6 +523,7 @@ import TWEEN from "@tweenjs/tween.js";
     createIntro();
 
     const elem = document.querySelector(".main-carousel");
+
     if (elem) {
       new Flickity(elem, {
         // options

@@ -250,7 +250,7 @@ button {
 }
 
 .games {
-  z-index: 999;
+  z-index: 1;
 }
 
 .game_item {
@@ -294,7 +294,7 @@ button {
   height: 20rem;
   overflow-x: hidden;
   position: relative;
-  z-index: -1;
+  z-index: 999;
   margin-top: -15rem;
   overflow-y: hidden;
 }
@@ -346,7 +346,7 @@ button {
   padding-left: 1rem;
   padding-right: 1rem;
   position: relative;
-  z-index: 999;
+  z-index: 700;
 }
 
 .chat_head_profile {
@@ -607,9 +607,25 @@ button {
 }
 
 .main_grid {
+  opacity: 0;
+
   @media (--xl) {
     display: grid;
     grid-template-columns: 1fr 40rem 1fr;
+  }
+}
+
+.fullstory_scroll .main_grid {
+  animation: animShow4 1.5s cubic-bezier(0.35, 0.755, 0.42, 0.95) forwards;
+}
+
+@-webkit-keyframes animShow4 {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
@@ -638,10 +654,14 @@ button {
 }
 
 .threecanvas {
-  height: 100%;
+  height: 100vh;
   pointer-events: none;
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 800;
 }
 
 #c {
@@ -650,17 +670,17 @@ button {
   display: block;
 }
 
+#d {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .gradient {
   position: relative;
   z-index: -1;
-  height: 100%;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 1) 10%,
-    rgba(136, 255, 224, 1) 95%
-  );
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
+  height: 100vh;
+  background-color: var(--color-black);
 }
 
 .fullstory_scroll {
@@ -671,12 +691,6 @@ button {
 .horizon_img {
   grid-column: 1 / -1;
   grid-row: 1 / 2;
-}
-
-.fullstory_grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 20rem 500rem;
 }
 
 .swipe {
@@ -699,7 +713,7 @@ button {
 }
 
 .wf-made-n4-active .swipe p {
-  color: var(--color-white);
+  color: var(--color-green);
   font-size: 4rem;
   font-family: "made", "Arial", sans-serif;
   text-align: center;
@@ -707,13 +721,160 @@ button {
 }
 
 .wf-madeoutline-n4-active .swipe p span {
-  color: var(--color-white);
+  color: var(--color-green);
   font-family: "madeoutline", "Arial", sans-serif;
   font-style: italic;
 }
 
 .no_pointerevents {
   pointer-events: none;
+}
+
+.fullstory {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.fullstory_grid {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+.controls {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  position: relative;
+  z-index: 999;
+  display: grid;
+  grid-template-columns: 20% 8rem 1fr 8rem 20%;
+  grid-template-rows: 5fr 8rem 1fr;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.fullstory .controls {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 2.5s forwards;
+}
+
+.btndown {
+  width: 8rem;
+  height: 8rem;
+  background-color: var(--color-green);
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before {
+    content: "";
+    display: block;
+    background-image: url("./assets/back_white.svg");
+    background-repeat: no-repeat;
+    width: 4rem;
+    height: 4rem;
+    fill: white;
+    cursor: pointer;
+    transform: rotate(-90deg);
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 1rem;
+  }
+}
+
+.btnup {
+  width: 8rem;
+  height: 8rem;
+  background-color: var(--color-green);
+  grid-column: 4 / 5;
+  grid-row: 2 / 3;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before {
+    content: "";
+    background-image: url("./assets/back_white.svg");
+    background-repeat: no-repeat;
+    width: 4rem;
+    height: 4rem;
+    fill: white;
+    cursor: pointer;
+    transform: rotate(90deg);
+    margin-top: 1rem;
+  }
+}
+
+.notification {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  position: relative;
+  z-index: 999;
+  display: grid;
+  grid-template-columns: 1rem 1fr 1rem;
+  grid-template-rows: 1rem 8rem 6fr;
+  transform: translate3d(0, -10rem, 0);
+}
+
+.fullstory .notification {
+  animation: animShow3 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) forwards;
+}
+
+@-webkit-keyframes animShow3 {
+  0% {
+    transform: translate3d(0, -10rem, 0);
+  }
+
+  to {
+    transform: translateZ(0);
+  }
+}
+
+.notificationbtn {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  width: 100%;
+  height: 8rem;
+  border: none;
+  background-color: #272727;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.45);
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 5rem 5fr 1fr;
+  padding: 1.5rem 1rem;
+
+  animation: blink 1.5s cubic-bezier(0.35, 0.755, 0.42, 0.95) 5s infinite;
+}
+
+@-webkit-keyframes blink {
+  0%,
+  to {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scale3d(1.025, 1.03, 1);
+  }
+}
+
+.time_indicator {
+  color: var(--color-green);
+  font-size: 1.2rem;
+  align-self: center;
+}
+
+.notification_text {
+  color: var(--color-white);
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.notification_titel {
+  color: var(--color-white);
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .phaserGame {

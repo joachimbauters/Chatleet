@@ -1,6 +1,6 @@
 <div class="fullstory_scroll">
 <div class="fullstory"></div>
-<div class="main_grid">
+<div class="main_grid hide">
   <div class="desktop_mobileinside">
   <header class="chat_head">
     <div class="chat_head_grid">

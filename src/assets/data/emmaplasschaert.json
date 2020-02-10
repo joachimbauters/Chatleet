@@ -1,4 +1,6 @@
 {
+  "image_profile": "./assets/emma.jpg",
+  "character": "Emma",
   "scenarios": {
     "scenario_1": {
       "ontvanger": "Emma Plasschaert",
@@ -228,6 +230,158 @@
           "outro": []
         }
       ]
+    },
+    "scenario_2": {
+      "ontvanger": "Emma Plasschaert",
+      "premise": [
+        {
+          "type": "message",
+          "user": "character",
+          "character": "emma",
+          "text": "Eens zien of de wind voor jou mee zit 😉. Wil je me eens challengen?",
+          "delay": 1000
+        }
+      ],
+      "dialogues": [
+        {
+          "choices": [
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "ja",
+              "id": 1
+            },
+            {
+              "type": "message",
+              "user": "other",
+              "character": "gebruiker",
+              "text": "nee",
+              "id": 2
+            }
+          ],
+          "replies": [],
+          "outro": []
+        }
+      ]
     }
-  }
+  },
+  "nostalgie": [
+    {
+      "cardType": 1,
+      "cardAlign": -10,
+      "titel": "yachtbelofte\nvan het jaar",
+      "titelAlign": -10,
+      "fontSize": 10,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_1.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_1.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_1.png"
+    },
+    {
+      "cardType": 2,
+      "cardAlign": 30,
+      "titel": "Zilver\nop ek u21",
+      "titelAlign": 55,
+      "fontSize": 12,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_2.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_2.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_2.png"
+    },
+    {
+      "cardType": 3,
+      "cardAlign": -40,
+      "titel": "van 65ste\nnaar 13de",
+      "titelAlign": -45,
+      "titelAlign2": -50,
+      "fontSize": 10,
+      "fontSize2": 6,
+      "tussentitel": "op de wereldranglijst in 1 jaar!",
+      "image": "./assets/scenario-1/nostalgie/image_3.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_3.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_3.png"
+    },
+    {
+      "cardType": 1,
+      "cardAlign": -10,
+      "titel": "over van jeugd \nnaar senioren",
+      "titelAlign": -10,
+      "fontSize": 10,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_4.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_4.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_4.png"
+    },
+    {
+      "cardType": 2,
+      "cardAlign": 30,
+      "titel": "yachtvrouw\nvan het jaar",
+      "titelAlign": 55,
+      "fontSize": 8,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_5.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_5.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_5.png"
+    },
+    {
+      "cardType": 3,
+      "cardAlign": -40,
+      "titel": "tiende op \nhet wk",
+      "titelAlign": -45,
+      "titelAlign2": -45,
+      "fontSize": 10,
+      "fontSize2": 6,
+      "tussentitel": "+ prijs voor beste debutant!",
+      "image": "./assets/scenario-1/nostalgie/image_6.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_6.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_6.png"
+    },
+    {
+      "cardType": 1,
+      "cardAlign": -10,
+      "titel": "zesde plaats op\nwereldranglijst",
+      "titelAlign": -20,
+      "fontSize": 10,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_7.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_7.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_7.png"
+    },
+    {
+      "cardType": 3,
+      "cardAlign": -40,
+      "titel": "wereld\nkampioen",
+      "titelAlign": -45,
+      "titelAlign2": -40,
+      "fontSize": 10,
+      "fontSize2": 6,
+      "tussentitel": "Eerste Belgische zege\nop het WK!",
+      "image": "./assets/scenario-1/nostalgie/image_9.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_9.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_9.png"
+    },
+    {
+      "cardType": 2,
+      "cardAlign": 30,
+      "titel": "Goud op\nworld cup",
+      "titelAlign": 55,
+      "fontSize": 12,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_8.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_8.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_8.png"
+    },
+    {
+      "cardType": 1,
+      "cardAlign": -10,
+      "titel": "geplaatst voor\nolympische spelen",
+      "titelAlign": -10,
+      "fontSize": 10,
+      "tussentitel": "",
+      "image": "./assets/scenario-1/nostalgie/image_10.png",
+      "texture1": "./assets/scenario-1/nostalgie/texture_10.png",
+      "texture2": "./assets/scenario-1/nostalgie/texture2_10.png"
+    }
+  ]
 }

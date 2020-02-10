@@ -1,4 +1,3 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const postcssPresetEnv = require("postcss-preset-env");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -26,6 +25,10 @@ module.exports = (env, { mode }) => {
               }
             }
           ]
+        },
+        {
+          test: /\.(glsl|frag|vert)$/,
+          use: ["glslify-import-loader", "raw-loader", "glslify-loader"]
         },
         {
           test: /\.(jpe?g|png|svg|webp)$/,

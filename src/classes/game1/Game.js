@@ -6,13 +6,17 @@ class Game extends Phaser.Game {
   constructor() {
     super({
       type: Phaser.AUTO,
-      width: 290,
-      height: 610,
+      width: window.innerWidth,
+      height: window.innerHeight,
       title: `games`,
       scene: [BootScene, PreloadScene, StartScene],
       url: `http://www.devine.be`,
       version: `1.0`,
-      parent: "devicePhaser",
+      parent: document.querySelector(".game_container"),
+      scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      },
       physics: {
         default: `arcade`,
         arcade: {

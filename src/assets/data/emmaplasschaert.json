@@ -140,7 +140,7 @@
               "type": "message",
               "user": "character",
               "character": "emma",
-              "text": "Het is heel moeilijk te combineren maar ik studeer Industriële Wetenschappen aan UGent!",
+              "text": "Het is heel moeilijk te combineren maar ik studeer Industrieel Ingenieur aan UGent!",
               "delay": 1000
             }
           ],
@@ -175,14 +175,7 @@
           "outro": []
         },
         {
-          "choices": [
-            {
-              "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "Continue"
-            }
-          ],
+          "choices": [],
           "replies": [
             {
               "type": "message",
@@ -207,7 +200,7 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan moet een leske Thermo dynamica ook wel lukken wh 😝",
               "id": 5
             }
           ],
@@ -238,30 +231,22 @@
           "type": "message",
           "user": "character",
           "character": "emma",
-          "text": "Eens zien of de wind voor jou mee zit 😉. Wil je me eens challengen?",
+          "text": "Nu je wat meer over mij weet, laten we eens zien of de wind voor jou mee zit 😉. Wil je me eens challengen?",
           "delay": 1000
-        }
-      ],
-      "dialogues": [
+        },
         {
-          "choices": [
-            {
-              "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "ja",
-              "id": 1
-            },
-            {
-              "type": "message",
-              "user": "other",
-              "character": "gebruiker",
-              "text": "nee",
-              "id": 2
-            }
-          ],
-          "replies": [],
-          "outro": []
+          "type": "message",
+          "user": "character",
+          "character": "emma",
+          "text": "Probeer mijn Hoogste score te verslaan in deze game challenge!",
+          "delay": 4000
+        },
+        {
+          "type": "game",
+          "user": "character",
+          "character": "emma",
+          "src": "./assets/scenario-1/game_cover_chat.png",
+          "delay": 7000
         }
       ]
     }

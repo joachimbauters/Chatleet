@@ -11,7 +11,12 @@
         "thumbnail": "./assets/emma.jpg"
       },
       "premise": "Emma heeft een foto gestuurd",
-      "storyduration": 5
+      "storyduration": 5,
+      "game": {
+        "link": "index.php?page=introzeilen",
+        "cover": "./assets/game_cover_zeilen.jpg"
+      },
+      "active": true
     },
     {
       "gender": "vrouw",
@@ -24,7 +29,54 @@
         "thumbnail": "./assets/jolien.jpg"
       },
       "premise": "Jolien heeft een foto gestuurd",
-      "storyduration": 7
+      "storyduration": 7,
+      "game": {
+        "link": "index.php?page=introfietsen",
+        "cover": "./assets/game_cover_zeilen.jpg"
+      },
+      "active": false
+    },
+    {
+      "gender": "vrouw",
+      "name": {
+        "voornaam": "Hanne",
+        "achternaam": "Claes",
+        "link": "hanneclaes"
+      },
+      "picture": {
+        "thumbnail": "./assets/hanne.jpg"
+      },
+      "premise": "Hanne heeft een foto gestuurd",
+      "storyduration": 4,
+      "active": false
+    },
+    {
+      "gender": "man",
+      "name": {
+        "voornaam": "Jaouad",
+        "achternaam": "Achab",
+        "link": "jaouadachab"
+      },
+      "picture": {
+        "thumbnail": "./assets/jaouad.jpg"
+      },
+      "premise": "Jaouad heeft een foto gestuurd",
+      "storyduration": 8,
+      "active": false
+    },
+    {
+      "gender": "vrouw",
+      "name": {
+        "voornaam": "Koen",
+        "achternaam": "Naert",
+        "link": "koennaert"
+      },
+      "picture": {
+        "thumbnail": "./assets/koen.jpg"
+      },
+      "premise": "Koen heeft een foto gestuurd",
+      "storyduration": 5,
+      "active": false
     }
   ]
 }

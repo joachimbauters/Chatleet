@@ -15,7 +15,14 @@ class PreloadScene extends Phaser.Scene {
       `preloader`
     );
     this.preloader.anims.play(`loading`);
-    this.load.image("bike", "./assets/bike.png");
+    this.load.spritesheet("bike1", "./assets/bike/bike1.png", {
+      frameWidth: 612,
+      frameHeight: 536
+    });
+    this.load.spritesheet("bike2", "./assets/bike/bike2.png", {
+      frameWidth: 612,
+      frameHeight: 536
+    });
     this.load.image("background", "./assets/background2.png");
   }
 

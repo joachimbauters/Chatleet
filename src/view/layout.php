@@ -27,6 +27,9 @@
   </script>
 
   <?php  echo($content);  ?>
+  <div class="desktop">
+    <p>voor deze ervaring, ga naar mobile of tablet</p>
+  </div>
   <?php echo($js) ?>
 </body>
 </html>

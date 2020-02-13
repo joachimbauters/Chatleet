@@ -6,8 +6,9 @@ import TWEEN from "@tweenjs/tween.js";
 import SimplexNoise from "simplex-noise";
 import OBJLoader from "./js/OBJLoader";
 import MTLLoader from "./js/MTLLoader";
-// import Game1 from "./classes/game1/Game.js";
-//import Game2 from "./classes/game2/Game.js";
+import Cookies from "js-cookie";
+import Game1 from "./classes/game1/Game.js";
+import Game2 from "./classes/game2/Game.js";
 
 global.THREE = THREE;
 
@@ -18,6 +19,7 @@ global.THREE = THREE;
   let currentDialogue;
   const noise = new SimplexNoise();
   const $answerbox = document.querySelector(`.answers`);
+  const $answerlist = document.querySelector(`.answers_list`);
   const $chatbox = document.querySelector(`.messages`);
   const $canvas = document.createElement(`canvas`);
   const $canvas2 = document.createElement(`canvas`);
@@ -28,6 +30,7 @@ global.THREE = THREE;
     if (!$chatbox) {
       return;
     }
+
     story = data.scenarios.scenario_1;
     const $naam = document.querySelector(`.chat_head_name`);
     if ($naam) {
@@ -66,11 +69,36 @@ global.THREE = THREE;
     return $li;
   };
 
-  const parse = data => {
+  const parse = async data => {
     stories = data.stories;
     stories.forEach(character => {
       createStory(character);
+      createGames(character);
     });
+  };
+
+  const createGames = character => {
+    const $ul = document.querySelector(`.games`);
+    const $li = document.createElement(`li`);
+
+    $li.classList.add(`game_item`);
+    $li.classList.add(`carousel-cell`);
+
+    if (character.game) {
+      $li.innerHTML = `
+      <a href="${character.game.link}">
+        <article class="game">
+          <img src="${character.picture.thumbnail}" alt="profile" class="cover_atleet img_responsive">
+          <img src="${character.game.cover}" alt="cover" class="img_responsive game_image">
+        </article>
+      </a>
+    `;
+    } else {
+      return;
+    }
+    if ($ul) {
+      $ul.appendChild($li);
+    }
   };
 
   const createIntro = () => {
@@ -78,9 +106,14 @@ global.THREE = THREE;
 
     setTimeout(() => {
       const $li = document.createElement(`li`);
-      $li.classList.add("spinner");
+      $li.classList.add("dialoog");
       $li.innerHTML = `
+      <div class="dialoog_avatar avatar_character">
+              <img src="./assets/sporza.jpg" class="img_responsive">
+        </div>
+      <div class="spinner">
       <div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div>
+      </div>
     `;
       if ($ul) {
         $ul.appendChild($li);
@@ -95,8 +128,11 @@ global.THREE = THREE;
       $li.classList.add("dialoog");
       $li.classList.add("charactre");
       $li.innerHTML = `
+        <div class="dialoog_avatar avatar_character">
+              <img src="./assets/sporza.jpg" class="img_responsive">
+        </div>
         <div class="dialoog_message_character">
-          <p>Yoo, what’s up? Chat met onze Belgische atleten en unlock de ultieme challenge!</p>
+          <p>Yoo, what’s up! Klaar om onze Belgische atleten te leren kennen?</p>
         </div>
     `;
       if ($ul) {
@@ -109,14 +145,27 @@ global.THREE = THREE;
       $li.classList.add("dialoog");
       $li.classList.add("other");
       $li.innerHTML = `
-        <div class="dialoog_message_other">
-          <p>Bring it on!</p>
-        </div>
+        <a href="#berichten" class="dialoog_message_other_scroll">
+          Bring it on!
+        </a>
     `;
       if ($ul) {
         $ul.appendChild($li);
+        $li.addEventListener(`click`, e => {
+          e.preventDefault();
+          const $a = $li.childNodes[1];
+          scrollTo(document.querySelector($a.getAttribute(`href`)));
+        });
       }
     }, 5000);
+  };
+
+  const scrollTo = element => {
+    window.scroll({
+      behavior: `smooth`,
+      left: 0,
+      top: element.getBoundingClientRect().top + window.scrollY
+    });
   };
 
   const createStory = character => {
@@ -124,9 +173,9 @@ global.THREE = THREE;
     const $li = document.createElement(`li`);
 
     $li.classList.add(`story`);
-    $li.innerHTML = `
+    if (character.active === true) {
+      $li.innerHTML = `
       <a href="index.php?page=${character.name.link}">
-        <p class="story_duration">${character.storyduration} min</p>
         <div class="story_card">
           <img src="${character.picture.thumbnail}" alt="${character.name.voornaam} ${character.name.achternaam}" class="img_responsive story_img"/>
           <div class="meta">
@@ -139,6 +188,23 @@ global.THREE = THREE;
         </div>
       </a>
     `;
+    } else {
+      $li.innerHTML = `
+      <a>
+        <div class="story_card">
+          <img src="${character.picture.thumbnail}" alt="${character.name.voornaam} ${character.name.achternaam}" class="img_responsive story_img"/>
+          <div class="meta">
+            <h3 class="story_naam">${character.name.voornaam} ${character.name.achternaam}</h3>
+            <p class="story_bijtext">${character.premise}</p>
+          </div>
+          <div class="extra_info">
+            <div class="read_indicator"></div>
+          </div>
+        </div>
+      </a>
+    `;
+    }
+
     if ($ul) {
       $ul.appendChild($li);
     }
@@ -157,18 +223,24 @@ global.THREE = THREE;
       $answerbox.appendChild($choice);
     });
 
-    const elem = document.querySelector(".main-carousel");
-    if (elem) {
-      new Flickity(elem, {
+    const meme = document.querySelector(".meme-carousel");
+    if (meme) {
+      new Flickity(meme, {
+        // options
         cellAlign: "left",
         draggable: true,
         prevNextButtons: false,
-        pageDots: false
+        pageDots: true
       });
     }
 
     const $btns = document.querySelectorAll(".dialoog_btn");
     $btns.forEach(btn => {
+      btn.addEventListener("click", handleClickAnswer);
+    });
+
+    const $btnsImg = document.querySelectorAll(".dialoog_btn_img");
+    $btnsImg.forEach(btn => {
       btn.addEventListener("click", handleClickAnswer);
     });
   };
@@ -181,12 +253,25 @@ global.THREE = THREE;
 
     setTimeout(() => {
       currentDialogue = story.dialogues[dialogueCount];
-
       $answerbox.innerHTML = ``;
 
-      if (!currentDialogue) {
-        transitionAnimation();
-        return;
+      console.log(currentDialogue.choices.length === 0);
+
+      if (currentDialogue.choices.length === 0) {
+        const $li = document.createElement(`li`);
+        $li.innerHTML = `
+                <div class="dialoog_message_other">
+                  <p>${answer}</p>
+                </div>
+              `;
+
+        $li.classList.add("dialoog");
+        $li.classList.add("other");
+        $chatbox.appendChild($li);
+        setHeightChat();
+        setTimeout(() => {
+          transitionAnimation();
+        }, 5000);
       } else {
         const $li = document.createElement(`li`);
         $li.innerHTML = `
@@ -302,6 +387,23 @@ global.THREE = THREE;
         }
         return $li;
         break;
+
+      case `game`:
+        $li.innerHTML = `
+          <div class="dialoog_avatar avatar_${message.user}">
+            <img src="./assets/${message.character}.jpg" class="img_responsive">
+          </div>
+          <div class="dialoog_message_${message.user}_game">
+            <img src="${message.src}" class="game_img img_responsive">
+            <div class="game_link_icon">
+              <a href="index.php?page=introzeilen" class="game_link">Play now</a>
+            </div>
+          </div>
+          `;
+        $li.classList.add("dialoog");
+        $li.classList.add(message.user);
+        return $li;
+        break;
     }
   };
 
@@ -314,7 +416,6 @@ global.THREE = THREE;
     $ul.classList.remove("flex_row_choices_image");
 
     const $li = document.createElement(`li`);
-    $li.classList = `answer_item`;
     switch (dialogue.type) {
       case `message`:
         $li.innerHTML = `
@@ -322,19 +423,20 @@ global.THREE = THREE;
           ${dialogue.text}
         </button>
         `;
+        $li.classList = `answer_item`;
         return $li;
         break;
       case `image`:
-        $ul.classList.add("main-carousel");
+        $ul.classList.add("meme-carousel");
 
         $li.innerHTML = `
-        <button type="button" class="dialoog_btn" data-id="${dialogue.id}">
-          <img src="${dialogue.src}" class="img_responsive choice_img">
+        <button type="button" class="dialoog_btn_img" data-id="${dialogue.id}">
+          <img src="${dialogue.src}" class="img_responsive">
         </button>
         `;
 
-        $li.classList.add(`is-imgchoice`);
         $li.classList.add("carousel-cell");
+        $li.classList.add("answer_item_img");
         return $li;
         break;
 
@@ -348,6 +450,7 @@ global.THREE = THREE;
         `;
 
         $li.classList = `is-videochoice`;
+        $li.classList = `answer_item`;
         return $li;
         break;
     }
@@ -471,13 +574,15 @@ global.THREE = THREE;
           8
         );
 
+        geom.translate(0, -100, 0);
+
         const mat = new THREE.ShaderMaterial({
           uniforms: {
             color1: {
-              value: new THREE.Color(0x226965)
+              value: new THREE.Color(0x002722)
             },
             color2: {
-              value: new THREE.Color(0xb1a6a4)
+              value: new THREE.Color(0x316960)
             }
           },
           vertexShader: `
@@ -531,12 +636,12 @@ global.THREE = THREE;
       constructor() {
         const geom = new THREE.PlaneGeometry(
           window.innerWidth + 1000,
-          1000,
+          2000,
           6,
           6
         );
 
-        geom.translate(0, -200, -300);
+        geom.translate(0, window.innerHeight / 2 - 1000, -300);
         geom.computeBoundingBox();
 
         const mat = new THREE.ShaderMaterial({
@@ -545,7 +650,7 @@ global.THREE = THREE;
               value: new THREE.Color(0x000000)
             },
             color2: {
-              value: new THREE.Color(0x7dd6c0)
+              value: new THREE.Color(0x316960)
             },
             bboxMin: {
               value: geom.boundingBox.min
@@ -586,6 +691,7 @@ global.THREE = THREE;
     let sea, sky, seawater, light1, light2, light3, light4, group;
     const createHorizon = () => {
       sea = new Sea();
+      sea.mesh.position.y = 10;
       sea.mesh.rotateX(-Math.PI / 4);
 
       sky = new Sky();
@@ -614,8 +720,8 @@ global.THREE = THREE;
             boot = object;
 
             boot.rotateX(Math.PI / 8);
-            boot.position.z = 60;
-            boot.position.y = -30;
+            boot.position.z = 100;
+            boot.position.y = -60;
             boot.position.x = -50;
             group.add(boot);
           }
@@ -630,7 +736,7 @@ global.THREE = THREE;
       group.add(light3.mesh);
       group.add(light4.mesh);
 
-      group.position.y = 1600;
+      group.position.y = 2000;
       scene.add(group);
     };
 
@@ -643,7 +749,7 @@ global.THREE = THREE;
           6
         );
 
-        geom.translate(0, 405, -50);
+        geom.translate(0, window.innerHeight / 2, -50);
 
         const texture = new THREE.TextureLoader().load(
           "./assets/horizon-sky.jpg"
@@ -859,7 +965,7 @@ global.THREE = THREE;
               (geometry2.boundingBox.max.x - geometry2.boundingBox.min.x);
             geometry2.translate(xMid2 - item.titelAlign2, -25, 10);
             const matLite2 = new THREE.MeshBasicMaterial({
-              color: 0x84ff00,
+              color: 0xffffff,
               transparent: true,
               side: THREE.DoubleSide
             });
@@ -945,7 +1051,7 @@ global.THREE = THREE;
         });
       }
 
-      makeRoughGround(sea.mesh, 10);
+      makeRoughGround(sea.mesh, 12);
 
       renderer.render(scene, camera);
       renderer.setClearColor(0x000000, 0);
@@ -1031,6 +1137,11 @@ global.THREE = THREE;
               2000
             )
             .easing(TWEEN.Easing.Cubic.InOut)
+            .onUpdate(() => {
+              if (count2 === 12) {
+                disableControls();
+              }
+            })
             .onComplete(() => {
               if (count2 === 12) {
                 enableNotification();
@@ -1309,7 +1420,7 @@ global.THREE = THREE;
       group.add(light3.mesh);
       group.add(light4.mesh);
 
-      group.position.y = -canvas.clientHeight / 2 - 200;
+      group.position.y = -canvas.clientHeight / 2 - 500;
 
       scene.add(group);
     };
@@ -1369,13 +1480,14 @@ global.THREE = THREE;
         .to(
           {
             x: 0,
-            y: canvas.clientHeight + 1000,
+            y: canvas.clientHeight + 1500,
             z: 0
           },
-          8000
+          10000
         )
-        .easing(TWEEN.Easing.Linear.None)
+        .easing(TWEEN.Easing.Cubic.InOut)
         .onComplete(() => {
+          water.pause();
           addNostalgia();
         })
         .start();
@@ -1385,6 +1497,7 @@ global.THREE = THREE;
     init();
   };
 
+  let water;
   const transitionAnimation = () => {
     const $answerList = document.querySelector(`.answers_list`);
     $answerList.classList.add(`hide`);
@@ -1401,14 +1514,17 @@ global.THREE = THREE;
     $fullstoryScroll.appendChild($div);
 
     //animatiecode
+    water = new Audio("./assets/sounds/water_flow.mp3");
+    water.play();
     waterAnimation($canvas2);
   };
 
+  let audio;
   const addNostalgia = () => {
-    // const $fullstoryScroll = document.querySelector(`.fullstory_scroll`);
-    // const $threecanvas = document.querySelector(`.threecanvas`);
+    const $fullstoryScroll = document.querySelector(`.fullstory_scroll`);
+    const $threecanvas = document.querySelector(`.threecanvas`);
 
-    // $fullstoryScroll.removeChild($threecanvas);
+    $fullstoryScroll.removeChild($threecanvas);
 
     const $main = document.querySelector(`.fullstory`);
 
@@ -1440,32 +1556,36 @@ global.THREE = THREE;
 
     scrollToBottomStory();
 
-    // const $swipe = document.createElement(`div`);
-    // $swipe.classList.add(`swipe`);
-    // const $swipeText = document.createElement(`p`);
-    // $swipeText.innerHTML = `Swipe</br><span>down</span>`;
-    // $swipe.appendChild($swipeText);
+    const $swipe = document.createElement(`div`);
+    $swipe.classList.add(`swipe`);
+    const $swipeText = document.createElement(`p`);
+    $swipeText.innerHTML = `Swipe</br><span>down</span>`;
+    $swipe.appendChild($swipeText);
 
-    // const $parent2 = document.querySelector(`.fullstory_scroll`);
-    // $parent2.appendChild($swipe);
+    const $parent2 = document.querySelector(`.fullstory_scroll`);
+    $parent2.appendChild($swipe);
 
-    // const $chat = document.querySelector(".main_grid");
+    const $chat = document.querySelector(".main_grid");
 
-    // window.addEventListener(
-    //   "scroll",
-    //   function() {
-    //     if ($chat) {
-    //       const bounding = $chat.getBoundingClientRect();
-    //       if (bounding.y >= window.innerHeight) {
-    //         $chat.classList.add("hide");
-    //         $parent2.removeChild($swipe);
-    //         enableControls();
-    //         mainThreejs($canvas);
-    //       }
-    //     }
-    //   },
-    //   true
-    // );
+    window.addEventListener(
+      "scroll",
+      function() {
+        if ($chat) {
+          const bounding = $chat.getBoundingClientRect();
+          if (bounding.y >= window.innerHeight) {
+            $chat.classList.add("hide");
+            $parent2.removeChild($swipe);
+            enableControls();
+            mainThreejs($canvas);
+
+            audio = new Audio("./assets/sounds/voiceover.mp3");
+            audio.play();
+            audio.loop = true;
+          }
+        }
+      },
+      true
+    );
   };
 
   const enableControls = () => {
@@ -1485,7 +1605,7 @@ global.THREE = THREE;
   };
 
   const enableNotification = () => {
-    disableControls();
+    audio.pause();
 
     const url = `./assets/data/${naam}.json`;
     fetch(url)
@@ -1534,6 +1654,7 @@ global.THREE = THREE;
         $extrainfo.appendChild($time);
         if ($fullstory) {
           setTimeout(() => {
+            console.log("notification");
             $fullstory.appendChild($div);
             const sound = new Audio("./assets/sounds/notification.mp3");
             sound.play();
@@ -1546,7 +1667,7 @@ global.THREE = THREE;
     const $fullstory = document.querySelector(".fullstory");
     const $div = document.querySelector(`.controls`);
 
-    if ($fullstory) {
+    if ($fullstory && $div) {
       $fullstory.removeChild($div);
     }
   };
@@ -1577,33 +1698,40 @@ global.THREE = THREE;
     if (!$chatbox) {
       return;
     }
-    $chatbox.innerHTML = ``;
+    const $dialoogscroll = document.querySelector(`.dialoog_scroll`);
+    if ($dialoogscroll) {
+      $dialoogscroll.classList.remove(`no_pointerevents`);
+    }
+    if ($answerlist) {
+      $answerlist.classList.add("hide");
+    }
     $answerbox.innerHTML = ``;
     storyGame = data.scenarios.scenario_2;
-
-    console.log(storyGame);
 
     storyGame.premise.forEach(premise => {
       setTimeout(() => {
         const $loader = messageLoading(premise.character);
         $chatbox.appendChild($loader);
+        setHeightChat();
         setTimeout(() => {
           $chatbox.removeChild($loader);
           const $message = createMessage(premise);
           $chatbox.appendChild($message);
+          setHeightChat();
         }, 2500);
       }, premise.delay);
     });
 
     setTimeout(() => {
-      createAnswersAndResponses(storyGame.dialogues);
       setHeightChat();
-    }, 5000);
+    }, 10000);
   };
 
   const init = () => {
-    // new Game1();
-    //new Game2();
+    if (Cookies.get("landingvisited") === undefined) {
+      window.location.href = "index.php?page=landing";
+      Cookies.set("landingvisited", "landingvisited", { expires: 7 });
+    }
 
     const url2 = `./assets/data/${naam}.json`;
 
@@ -1618,24 +1746,64 @@ global.THREE = THREE;
       .then(r => r.json())
       .then(jsonData => {
         parse(jsonData);
+      })
+      .then(() => {
+        setTimeout(() => {
+          const elem = document.querySelector(".main-carousel");
+          if (elem) {
+            new Flickity(elem, {
+              // options
+              cellAlign: "left",
+              draggable: true,
+              prevNextButtons: false,
+              pageDots: false,
+              resize: true
+            });
+          }
+        }, 100);
       });
 
-    const elem = document.querySelector(".main-carousel");
-
-    if (elem) {
-      new Flickity(elem, {
+    const landing = document.querySelector(".landing-carousel");
+    if (landing) {
+      const landingflicky = new Flickity(landing, {
         // options
-        cellAlign: "left",
+        cellAlign: "center",
         draggable: true,
         prevNextButtons: false,
-        pageDots: false
+        pageDots: true
+      });
+
+      landingflicky.on("change", function(index) {
+        const $landingBottom = document.querySelector(".landing_bottom");
+        if ($landingBottom) {
+          const $landingbtn = document.createElement("a");
+          $landingbtn.classList.add("landingbtn");
+          $landingbtn.textContent = "Got it!";
+          $landingbtn.href = "index.php";
+
+          if (index === 2) {
+            $landingBottom.appendChild($landingbtn);
+          } else {
+            return;
+          }
+        }
       });
     }
 
     createIntro();
-    addNostalgia();
-    enableControls();
-    mainThreejs($canvas);
+    // addNostalgia();
+    // enableControls();
+    // mainThreejs($canvas);
+
+    const $gameContainer = document.querySelector(".game_container");
+
+    if ($gameContainer && window.location.href.indexOf("gamezeilen") > -1) {
+      new Game1();
+    }
+
+    if ($gameContainer && window.location.href.indexOf("gamefietsen") > -1) {
+      new Game2();
+    }
   };
 
   init();

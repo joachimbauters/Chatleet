@@ -1,6 +1,6 @@
 <div class="fullstory_scroll">
 <div class="fullstory"></div>
-<div class="main_grid hide">
+<div class="main_grid">
   <div class="desktop_mobileinside">
   <header class="chat_head">
     <div class="chat_head_grid">
@@ -22,17 +22,13 @@
       </div>
     </div>
     <div class="answers_list">
+      <h2 class="choose_answer">Kies je antwoord:</h2>
       <ul class="answers">
 
       </ul>
     </div>
   </section>
   </main>
-  </div>
-  <div class="desktop_mobile">
-    <div class="desktop_mobiledevice">
-      <img src="./assets/device2.png" alt="device" class="img_responsive">
-    </div>
   </div>
 </div>
 </div>

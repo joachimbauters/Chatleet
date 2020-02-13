@@ -33,6 +33,7 @@ button {
 
 .hide {
   display: none;
+  opacity: 0;
 }
 
 .wf-nikkyou-n4-active .logo_bijtext {
@@ -56,11 +57,21 @@ button {
   letter-spacing: 0.2rem;
 }
 
-.heading-2 {
+.wf-made-n4-active .heading-2 {
   font-size: 2.4rem;
-  font-weight: medium;
-  font-weight: 700;
+  font-style: italic;
+  font-family: "made", "Arial", sans-serif;
   color: var(--color-white);
+  letter-spacing: 0.2rem;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 4rem;
+    height: 0.7rem;
+    background-color: var(--color-green);
+    margin-top: 0.8rem;
+  }
 }
 
 .green_accent {
@@ -134,6 +145,18 @@ button {
   animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.2s forwards;
 }
 
+.stories .story:nth-child(3) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.4s forwards;
+}
+
+.stories .story:nth-child(4) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.6s forwards;
+}
+
+.stories .story:nth-child(5) {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0.8s forwards;
+}
+
 .message_intro {
   height: 18rem;
 }
@@ -170,8 +193,24 @@ button {
   transform: translateX(-11rem);
 }
 
+.green_background_landing {
+  width: 40rem;
+  height: 40rem;
+  background-color: var(--color-green);
+  background: linear-gradient(
+    100deg,
+    rgba(132, 255, 0, 0.46) -50.61%,
+    rgba(132, 255, 0, 0) 80.79%
+  );
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
+  margin-top: -18rem;
+  transform: translateX(-11rem);
+}
+
 .story {
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 2rem;
   cursor: pointer;
   background-color: var(--color-darkgray);
   opacity: 0;
@@ -184,8 +223,8 @@ button {
 
 .story_card {
   display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 5rem 5fr 1fr;
+  grid-gap: 2rem;
+  grid-template-columns: 5rem 5fr min-content;
 }
 
 .extra_info {
@@ -260,6 +299,8 @@ button {
 
 .game {
   display: grid;
+  grid-template-columns: 1rem 1fr 1rem;
+  grid-template-rows: 1rem 1fr 1rem;
 
   &::before {
     content: "";
@@ -274,7 +315,20 @@ button {
   }
 }
 
+.cover_atleet {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  align-self: flex-end;
+  position: relative;
+  z-index: 5;
+}
+
 .game_image {
+  position: relative;
+  z-index: -1;
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   z-index: -1;
@@ -297,12 +351,13 @@ button {
   z-index: 999;
   margin-top: -15rem;
   overflow-y: hidden;
+  pointer-events: none;
 }
 
 .sporza {
   animation: rotate-center 24s linear infinite both;
   width: 20rem;
-  margin-right: -5rem;
+  margin-right: -7rem;
 }
 
 @keyframes rotate-center {
@@ -312,12 +367,38 @@ button {
   }
 }
 
+.sporza_logo {
+  content: "";
+  background-repeat: no-repeat;
+  background-image: url("./assets/sporza_svg.svg");
+  height: 5rem;
+  width: 23rem;
+  transform: scale(0.6);
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.socials_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: auto;
+}
+
+.social_item {
+  justify-self: center;
+}
+
 /*story*/
 
 .back_flex {
   grid-column: 1 / 2;
   grid-row: 1 / -1;
   align-self: center;
+}
+
+.back_intro {
+  margin-bottom: 1rem;
 }
 
 .back {
@@ -423,11 +504,68 @@ button {
   max-width: 27rem;
 }
 
+.dialoog_message_character_game {
+  text-align: left;
+  background-color: transparent;
+  border: 0.2rem solid var(--color-white);
+  max-width: 30rem;
+  display: grid;
+  grid-template-columns: 1rem 1fr 1rem;
+  grid-template-rows: 1rem 1fr 1rem;
+}
+
+.game_link_icon {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  align-self: flex-end;
+  justify-self: flex-end;
+  width: 12rem;
+  height: 4rem;
+  background-color: var(--color-green);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game_link {
+  color: var(--color-black);
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    background-image: url("./assets/play_now.svg");
+    background-repeat: no-repeat;
+    width: 2rem;
+    height: 1.3rem;
+  }
+}
+
+.game_img {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  position: relative;
+  z-index: -1;
+}
+
 .dialoog_message_other {
   text-align: left;
   background-color: var(--color-white);
   padding: 1rem 1.5rem;
   max-width: 27rem;
+}
+
+.dialoog_message_other_scroll {
+  text-align: left;
+  background-color: var(--color-white);
+  padding: 1rem 1.5rem;
+  max-width: 27rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: var(--color-black);
 }
 
 .dialoog_message_character p {
@@ -492,8 +630,8 @@ button {
 }
 
 .spinner > div {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 100%;
   -webkit-animation: sk-bouncedelay 0.5s ease alternate infinite;
   animation: sk-bouncedelay 0.5s ease alternate infinite;
@@ -547,6 +685,12 @@ button {
   }
 }
 
+.choose_answer {
+  color: var(--color-white);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
 .dialoog_btn {
   padding: 1.5rem 1rem;
   background-color: transparent;
@@ -570,9 +714,12 @@ button {
 }
 
 .answer_item {
-  flex: 0 0 auto;
   opacity: 0;
   transform: translate3d(0, 20px, 0);
+}
+
+.answers {
+  margin-top: 2rem;
 }
 
 .answers .answer_item:first-child {
@@ -590,20 +737,24 @@ button {
   margin-bottom: 1rem;
 }
 
-.answers .is-imgchoice {
+.answer_item_img {
   margin-right: 2rem;
-  height: 27rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 }
 
-.flex_row_choices_image {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+.answers .answer_item_img {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
 }
 
-.choice_img {
-  width: 15rem;
+.dialoog_btn_img {
+  background: transparent;
+  padding: 1rem;
+  cursor: pointer;
+  color: var(--color-white);
+  border: none;
+  height: 20rem;
+  width: 30rem;
 }
 
 .main_grid {
@@ -629,28 +780,27 @@ button {
   }
 }
 
-.desktop_mobileinside {
-  @media (--xl) {
-    grid-column: 2 / 3;
-    grid-row: 1 / -1;
-    align-self: center;
-    justify-self: center;
-    width: 30rem;
-  }
-}
-
-.desktop_mobile {
+.desktop {
   display: none;
 
   @media (--xl) {
-    display: block;
-    grid-column: 2 / 3;
-    grid-row: 1 / -1;
-    position: relative;
-    z-index: 999;
-    align-self: center;
-    pointer-events: none;
+    position: absolute;
+
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: var(--color-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+}
+
+.desktop p {
+  color: var(--color-white);
+  font-size: 4rem;
 }
 
 .threecanvas {
@@ -875,6 +1025,187 @@ button {
   color: var(--color-white);
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.landing {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr;
+}
+
+.landing_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+}
+
+.landing_bottom {
+  display: grid;
+  grid-template-columns: 2rem min-content 1fr min-content 2rem;
+  grid-template-rows: 1fr 2rem;
+}
+
+.landing_bottom_game {
+  display: grid;
+  grid-template-columns: 2rem min-content 1fr min-content 2rem;
+  grid-template-rows: 1fr 2rem;
+}
+
+.landingbtn {
+  width: 9.5rem;
+  height: 4.5rem;
+  background-color: var(--color-green);
+  color: black;
+  font-weight: 600;
+  outline: none;
+  font-size: 2rem;
+  grid-row: 1 / 2;
+  grid-column: 4 / 5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.landingbtn_intro {
+  width: 9.5rem;
+  height: 4.5rem;
+  background-color: var(--color-green);
+  color: black;
+  font-weight: 600;
+  outline: none;
+  font-size: 2rem;
+  grid-row: 1 / 2;
+  grid-column: 4 / 5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing_bottom .landingbtn {
+  animation: animShow 0.6s cubic-bezier(0.35, 0.755, 0.42, 0.95) 0s forwards;
+}
+
+.sporza_logo_landing {
+  content: "";
+  display: block;
+  background-repeat: no-repeat;
+  background-image: url("./assets/sporza_svg.svg");
+  background-size: 10rem;
+  height: 2rem;
+  width: 10rem;
+  padding: 0;
+  margin: 0;
+
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  align-self: flex-end;
+}
+
+.landing_card {
+  height: calc(100vh - 40vh);
+  width: calc(100vw - 20vw);
+  margin-right: 2rem;
+  background-color: var(--color-darkgray);
+  padding: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.landing_card_intro {
+  height: calc(100vh - 45vh);
+  width: calc(100vw - 20vw);
+  margin-right: 2rem;
+  background-color: var(--color-darkgray);
+  padding: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.landing_card_grid {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 50% max-content;
+  grid-gap: 5rem;
+}
+
+.landing_card_grid img {
+  align-self: flex-end;
+}
+
+.landing_card_grid_intro {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 50% max-content;
+  grid-template-columns: 1fr 15rem 1fr;
+  grid-gap: 3rem;
+
+  @media (--md) {
+    grid-template-rows: 70% max-content;
+    grid-template-columns: 1fr 30rem 1fr;
+  }
+}
+
+.landing_card_grid_intro img {
+  align-self: center;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.landing_meta {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  grid-gap: 1rem;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+}
+
+.landing_meta h3 {
+  color: var(--color-white);
+  font-size: 1.7rem;
+  text-align: center;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.landing_meta p {
+  color: var(--color-white);
+  font-size: 1.6rem;
+  text-align: center;
+  font-weight: 300;
+  line-height: 2rem;
+  width: 25rem;
+
+  @media (--md) {
+    width: 100%;
+  }
+}
+
+.flickity-page-dots {
+  position: relative;
+  bottom: -1rem;
+}
+
+.flickity-page-dots .dot {
+  color: var(--color-darkgray);
+  opacity: 1;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.flickity-page-dots .dot.is-selected {
+  background: var(--color-green);
+}
+
+.game_container {
+  height: 100vh;
 }
 
 .phaserGame {

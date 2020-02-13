@@ -12,6 +12,15 @@ class EmmaplasschaertController extends Controller{
     $this->set('title','emmaplasschaert');
   }
 
+  public function intro(){
+    $this->set('title','challenge-intro');
+  }
+
+  public function game(){
+    $this->set('title','challenge ⛵️');
+  }
+
+
 }
 
 ?>

@@ -12,6 +12,14 @@ class JoliendhooreController extends Controller{
     $this->set('title','joliendhoore');
   }
 
+  public function intro(){
+    $this->set('title','challenge-intro');
+  }
+
+  public function game(){
+    $this->set('title','challenge 🚴‍♀️');
+  }
+
 }
 
 ?>

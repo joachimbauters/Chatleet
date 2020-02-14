@@ -2,9 +2,6 @@
 <header class="wrapper_inside">
     <div class="header_flex_stories">
       <div class="wrapper">
-        <div class="back_intro">
-          <a href="index.php" class="back"><span class="hide">Back</span></a>
-        </div>
         <p class="logo_bijtext">おしゃべり</p>
         <h1 class="heading-1"><span class="logo_outline">CH</span>ATLEET<span class="green_accent">.</span></h1>
       </div>
@@ -47,7 +44,9 @@ zo ver mogelijk.</p>
     </ul>
   </section>
   <section class="landing_bottom_game">
-      <h2 class="sporza_logo_landing"></h2>
+      <div class="back_intro">
+        <a href="index.php" class="back"><span>Back</span></a>
+      </div>
       <a href="index.php?page=gamezeilen" class="landingbtn_intro">Got it!</a>
   </section>
 </main>

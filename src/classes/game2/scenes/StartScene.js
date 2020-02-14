@@ -10,6 +10,7 @@ class StartScene extends Phaser.Scene {
     this.levelSpeed = 0;
     this.pointerSpeed = 1500;
     this.startScene = false;
+    this.afstand = 0;
   }
 
   create() {
@@ -23,22 +24,40 @@ class StartScene extends Phaser.Scene {
 
     this.background.setTileScale(0.5);
 
-    this.speed = this.add.text(20, 35 / 2, `Snelheid: 0 km/h`, {
-      fontSize: `18px`,
-      fill: `#FFFFFF`,
-      fontFamily: "sfprodisplay"
-    });
-
-    this.afstand = this.add.text(20, 85 / 2, `Afstand 0 Km`, {
-      fontSize: `18px`,
-      fill: `#FFFFFF`,
-      fontFamily: "sfprodisplay"
-    });
-
     this.addDividers();
     this.createPlayer2();
     this.createPlayer();
     this.countdown();
+
+    this.speedField = this.add
+      .text(
+        this.game.config.width / 2 - 25,
+        this.game.config.height - this.game.config.height / 9,
+        `Snelheid: 0 km/h`,
+        {
+          fontSize: `20px`,
+          fill: `#FFFFFF`,
+          fontFamily: "sfprodisplay",
+          fontStyle: "bold"
+        }
+      )
+      .setOrigin(1);
+
+    this.afstandField = this.add
+      .text(
+        this.game.config.width / 2 + 25,
+        this.game.config.height - this.game.config.height / 7,
+        `Afstand: 0 Km`,
+        {
+          fontSize: `20px`,
+          fill: `#FFFFFF`,
+          fontFamily: "sfprodisplay",
+          fontStyle: "bold"
+        }
+      )
+      .setOrigin(0);
+
+    this.afstand = 0;
 
     setTimeout(() => {
       this.pointerTween = this.tweens.add({
@@ -62,10 +81,87 @@ class StartScene extends Phaser.Scene {
       ) {
         console.log("hit");
         this.levelSpeed += 2;
+        this.hit = this.add
+          .text(
+            this.game.config.width / 2,
+            this.game.config.height - this.game.config.height / 4,
+            `Hit`,
+            {
+              fontSize: `60px`,
+              fill: `#84ff00`,
+              fontFamily: "made"
+            }
+          )
+          .setOrigin(0.5);
+        setTimeout(() => {
+          this.hit.destroy();
+        }, 400);
       } else {
         console.log("mis");
         if (this.levelSpeed >= 0.5) {
           this.levelSpeed -= 0.5;
+          this.miss = this.add
+            .text(
+              this.game.config.width / 2,
+              this.game.config.height - this.game.config.height / 4,
+              `mis`,
+              {
+                fontSize: `60px`,
+                fill: `#f54242`,
+                fontFamily: "made"
+              }
+            )
+            .setOrigin(0.5);
+          setTimeout(() => {
+            this.miss.destroy();
+          }, 400);
+        } else {
+          return;
+        }
+      }
+    });
+
+    this.input.on("touchstart", touch => {
+      if (
+        Math.floor(this.r3.x) >= this.game.config.width / 2 - 25 &&
+        Math.floor(this.r3.x) <= this.game.config.width / 2 + 25
+      ) {
+        console.log("hit");
+        this.levelSpeed += 2;
+        this.hit2 = this.add
+          .text(
+            this.game.config.width / 2,
+            this.game.config.height - this.game.config.height / 4,
+            `Hit`,
+            {
+              fontSize: `60px`,
+              fill: `#84ff00`,
+              fontFamily: "made"
+            }
+          )
+          .setOrigin(0.5);
+        setTimeout(() => {
+          this.hit2.destroy();
+        }, 400);
+      } else {
+        console.log("mis");
+        if (this.levelSpeed >= 0.5) {
+          this.levelSpeed -= 0.5;
+          this.miss2 = this.add
+            .text(
+              this.game.config.width / 2,
+              this.game.config.height - this.game.config.height / 4,
+              `mis`,
+              {
+                fontSize: `60px`,
+                fill: `#f54242`,
+                fontFamily: "made"
+              }
+            )
+            .setOrigin(0.5);
+          setTimeout(() => {
+            this.miss2.destroy();
+          }, 400);
         } else {
           return;
         }
@@ -80,7 +176,7 @@ class StartScene extends Phaser.Scene {
       .text(window.innerWidth / 2, window.innerHeight / 2, `3`, {
         fontSize: `200px`,
         fill: `#FFFFFF`,
-        fontFamily: "sfprodisplay"
+        fontFamily: "made"
       })
       .setOrigin(0.5);
 
@@ -100,7 +196,7 @@ class StartScene extends Phaser.Scene {
         .text(window.innerWidth / 2, window.innerHeight / 2, `2`, {
           fontSize: `200px`,
           fill: `#FFFFFF`,
-          fontFamily: "sfprodisplay"
+          fontFamily: "made"
         })
         .setOrigin(0.5);
 
@@ -120,7 +216,7 @@ class StartScene extends Phaser.Scene {
         .text(window.innerWidth / 2, window.innerHeight / 2, `1`, {
           fontSize: `200px`,
           fill: `#FFFFFF`,
-          fontFamily: "sfprodisplay"
+          fontFamily: "made"
         })
         .setOrigin(0.5);
 
@@ -140,7 +236,7 @@ class StartScene extends Phaser.Scene {
         .text(window.innerWidth / 2, window.innerHeight / 2, `Go!`, {
           fontSize: `200px`,
           fill: `#FFFFFF`,
-          fontFamily: "sfprodisplay"
+          fontFamily: "made"
         })
         .setOrigin(0.5);
 
@@ -167,7 +263,7 @@ class StartScene extends Phaser.Scene {
       this.game.config.width / 2,
       this.game.config.height,
       this.game.config.width,
-      150,
+      this.game.config.height / 6,
       0x000
     );
 
@@ -175,21 +271,27 @@ class StartScene extends Phaser.Scene {
       this.game.config.width / 2,
       this.game.config.height,
       50,
-      150,
+      this.game.config.height / 6,
       0xffffff
     );
 
-    this.r3 = this.add.rectangle(0, this.game.config.height, 20, 150, 0x84ff00);
+    this.r3 = this.add.rectangle(
+      0,
+      this.game.config.height,
+      20,
+      this.game.config.height / 6,
+      0x84ff00
+    );
   }
 
   createPlayer() {
-    this.player = new Player(this, 80, 450);
+    this.player = new Player(this, 80, 550);
     this.player.body.setAllowGravity(false);
 
     setTimeout(() => {
       this.tweens.add({
         targets: this.player,
-        y: { from: 450, to: 350 },
+        y: { from: 550, to: 350 },
         yoyo: true,
         duration: 10000,
         repeat: -1,
@@ -198,7 +300,7 @@ class StartScene extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.player,
-        x: { from: 80, to: 150 },
+        x: { from: 80, to: this.game.config.width - 100 },
         yoyo: true,
         duration: 10000,
         repeat: -1,
@@ -222,7 +324,7 @@ class StartScene extends Phaser.Scene {
       });
     }, 4000);
 
-    this.player3 = new Player2(this, 80, window.innerHeight / 2 + 200);
+    this.player3 = new Player2(this, 80, window.innerHeight / 2 - 50);
     this.player3.body.setAllowGravity(false);
 
     setTimeout(() => {
@@ -238,11 +340,17 @@ class StartScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.scene.start(`gameOver`);
+    localStorage.setItem("currentAfstand", Math.round(this.afstand));
+    this.levelSpeed = 0;
+    this.pointerSpeed = 1500;
+    this.startScene = false;
+    this.scene.start(`gameover`);
   }
 
   update() {
     this.background.tilePositionX += this.levelSpeed;
+
+    this.afstand += (0.01 * this.levelSpeed) / 4;
 
     if (this.startScene === true) {
       this.levelSpeed -= 0.02;
@@ -252,9 +360,10 @@ class StartScene extends Phaser.Scene {
       this.player3.anims.play("bikeforward2", true);
     }
 
-    if (Math.floor(this.levelSpeed) === 0 && this.startScene === true) {
-      console.log("gameover");
+    this.afstandField.setText(`Afstand: ${Math.round(this.afstand)} m`);
+    this.speedField.setText(`Snelheid: ${Math.round(this.levelSpeed)} Km/h`);
 
+    if (Math.floor(this.levelSpeed) === 0 && this.startScene === true) {
       this.gameOver();
     }
   }

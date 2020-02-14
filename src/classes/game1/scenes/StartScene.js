@@ -2,7 +2,6 @@ import Player from "../objects/Player.js";
 import Item from "../objects/Item.js";
 import Boei from "../objects/Boei.js";
 import SinkingBoat from "../objects/sinkingBoat";
-import SinkingBoei from "../objects/sinkingBoei";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -16,6 +15,8 @@ class StartScene extends Phaser.Scene {
     this.punten = 0;
     this.schade = 100;
     this.levelSpeed = 5;
+
+    this.playing = false;
   }
 
   create() {
@@ -27,20 +28,23 @@ class StartScene extends Phaser.Scene {
       "background"
     );
 
+    this.oceansound = this.sound.add("ocean");
+    this.meeuwsound = this.sound.add("meeuw");
+
     this.scoreTextField = this.add.text(20, 35, `Afstand: 0m`, {
-      fontSize: `18px`,
+      fontSize: `24px`,
       fill: `#FFFFFF`,
       fontFamily: "sfprodisplay"
     });
 
-    this.schadeTextField = this.add.text(20, 65, `Leven: 100%`, {
-      fontSize: `18px`,
+    this.schadeTextField = this.add.text(20, 75, `Leven: 100%`, {
+      fontSize: `24px`,
       fill: `#FFFFFF`,
       fontFamily: "sfprodisplay"
     });
 
-    this.puntenTextField = this.add.text(20, 95, `score: 0 Boeien`, {
-      fontSize: `18px`,
+    this.puntenTextField = this.add.text(20, 115, `Boeien: 0`, {
+      fontSize: `24px`,
       fill: `#FFFFFF`,
       fontFamily: "sfprodisplay"
     });
@@ -54,38 +58,6 @@ class StartScene extends Phaser.Scene {
     this.createPlayer();
     this.initItems();
     this.initBoeien();
-
-    this.sound.play("ocean", {
-      mute: false,
-      volume: 0.1,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: true,
-      delay: 0
-    });
-
-    this.sound.play("meeuw", {
-      mute: false,
-      volume: 0.1,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0
-    });
-
-    setInterval(() => {
-      this.sound.play("meeuw", {
-        mute: false,
-        volume: 0.1,
-        rate: 1,
-        detune: 0,
-        seek: 0,
-        loop: false,
-        delay: 0
-      });
-    }, 60000);
 
     this.timedEvent = this.time.addEvent({
       delay: this.value,
@@ -109,7 +81,7 @@ class StartScene extends Phaser.Scene {
     this.player = new Player(
       this,
       this.sys.game.canvas.width / 2,
-      this.sys.game.canvas.height / 4 + this.sys.game.canvas.height
+      this.sys.game.canvas.height / 4 + this.sys.game.canvas.height / 2
     );
     this.player.body.setAllowGravity(false);
     this.player.anims.play(`forward`, true);
@@ -216,7 +188,23 @@ class StartScene extends Phaser.Scene {
   hitItem(obj1, obj2) {
     obj2.disableBody(true, true);
 
-    this.schade -= 20;
+    this.schade -= 25;
+    if (this.punten >= 5) {
+      this.punten -= 5;
+      this.five = this.add.text(obj2.x, obj2.y, `-5`, {
+        fontSize: `50px`,
+        fill: `#FFFFFF`,
+        fontFamily: "made"
+      });
+
+      setTimeout(() => {
+        this.five.destroy();
+      }, 400);
+    }
+
+    if (this.levelSpeed >= 7) {
+      this.levelSpeed -= 1;
+    }
 
     this.sound.play("boathit", {
       mute: false,
@@ -249,14 +237,15 @@ class StartScene extends Phaser.Scene {
       delay: 0
     });
 
-    this.sinkingBoei = new SinkingBoei(this, obj2.x, obj2.y);
-    this.sinkingBoei.anims.play("sinkingboei", true);
-    this.sinkingBoei.once(
-      Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE,
-      () => {
-        this.sinkingBoei.destroy();
-      }
-    );
+    this.plusOne = this.add.text(obj2.x, obj2.y, `+1`, {
+      fontSize: `50px`,
+      fill: `#FFFFFF`,
+      fontFamily: "made"
+    });
+
+    setTimeout(() => {
+      this.plusOne.destroy();
+    }, 400);
   }
 
   hitBoeiAndBoat(obj1, obj2) {
@@ -272,22 +261,54 @@ class StartScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.scene.start(`gameOver`);
+    localStorage.setItem("currentBoeien", this.punten);
+    this.value = 2500;
+    this.speed = 2500;
+    this.score = 0;
+    this.punten = 0;
+    this.schade = 100;
+    this.levelSpeed = 5;
+
+    this.playing = false;
+
+    this.scene.start(`gameover`);
   }
 
   update() {
+    if (!this.playing) {
+      this.playing = true;
+      this.oceansound.play({
+        mute: false,
+        volume: 0.1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 0
+      });
+
+      this.meeuwsound.play({
+        mute: false,
+        volume: 0.1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 30000
+      });
+    }
     this.value += 1;
 
-    this.score += 0.05 * this.levelSpeed;
+    this.score += (0.05 * this.levelSpeed) / 4;
 
-    this.levelSpeed += 0.001;
+    this.levelSpeed += 0.002;
     this.speed -= 0.1;
 
     this.background.tilePositionY -= this.levelSpeed;
 
     this.scoreTextField.setText(`Afstand: ${Math.round(this.score)}m`);
     this.schadeTextField.setText(`Leven: ${Math.round(this.schade)}%`);
-    this.puntenTextField.setText(`Score: ${Math.round(this.punten)} Boeien`);
+    this.puntenTextField.setText(`Boeien: ${Math.round(this.punten)}`);
 
     this.checkDamage();
   }

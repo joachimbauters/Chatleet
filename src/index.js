@@ -3,6 +3,7 @@ import "phaser";
 import Flickity from "flickity";
 import * as THREE from "three";
 import TWEEN from "@tweenjs/tween.js";
+import { TweenLite } from "gsap/TweenMax";
 import SimplexNoise from "simplex-noise";
 import OBJLoader from "./js/OBJLoader";
 import MTLLoader from "./js/MTLLoader";
@@ -177,13 +178,21 @@ global.THREE = THREE;
       $li.innerHTML = `
       <a href="index.php?page=${character.name.link}">
         <div class="story_card">
-          <img src="${character.picture.thumbnail}" alt="${character.name.voornaam} ${character.name.achternaam}" class="img_responsive story_img"/>
+          <img src="${character.picture.thumbnail}" alt="${
+        character.name.voornaam
+      } ${character.name.achternaam}" class="img_responsive story_img"/>
           <div class="meta">
-            <h3 class="story_naam">${character.name.voornaam} ${character.name.achternaam}</h3>
+            <h3 class="story_naam">${character.name.voornaam} ${
+        character.name.achternaam
+      }</h3>
             <p class="story_bijtext">${character.premise}</p>
           </div>
           <div class="extra_info">
-            <div class="read_indicator"></div>
+            ${
+              Cookies.get(character.name.voornaam.toLowerCase()) === undefined
+                ? '<div class="read_indicator"></div>'
+                : "<div></div>"
+            }
           </div>
         </div>
       </a>
@@ -271,7 +280,7 @@ global.THREE = THREE;
         setHeightChat();
         setTimeout(() => {
           transitionAnimation();
-        }, 5000);
+        }, 2000);
       } else {
         const $li = document.createElement(`li`);
         $li.innerHTML = `
@@ -457,13 +466,6 @@ global.THREE = THREE;
   };
 
   const setHeightChat = () => {
-    const $answers = document.querySelector(".answers_list");
-    const $dialoog = document.querySelector(".dialoog_list");
-
-    if ($answers && $dialoog) {
-      $dialoog.style.marginBottom = `${$answers.offsetHeight}px`;
-    }
-
     scrollToBottomMessages();
   };
 
@@ -647,7 +649,7 @@ global.THREE = THREE;
         const mat = new THREE.ShaderMaterial({
           uniforms: {
             color1: {
-              value: new THREE.Color(0x000000)
+              value: new THREE.Color(0x181818)
             },
             color2: {
               value: new THREE.Color(0x316960)
@@ -1335,7 +1337,7 @@ global.THREE = THREE;
         const mat = new THREE.ShaderMaterial({
           uniforms: {
             color1: {
-              value: new THREE.Color(0x000000)
+              value: new THREE.Color(0x181818)
             },
             color2: {
               value: new THREE.Color(0x7dd6c0)
@@ -1480,10 +1482,10 @@ global.THREE = THREE;
         .to(
           {
             x: 0,
-            y: canvas.clientHeight + 1500,
+            y: canvas.clientHeight + 800,
             z: 0
           },
-          10000
+          8000
         )
         .easing(TWEEN.Easing.Cubic.InOut)
         .onComplete(() => {
@@ -1514,9 +1516,17 @@ global.THREE = THREE;
     $fullstoryScroll.appendChild($div);
 
     //animatiecode
-    water = new Audio("./assets/sounds/water_flow.mp3");
-    water.play();
-    waterAnimation($canvas2);
+    setTimeout(() => {
+      water = new Audio("./assets/sounds/water_flow.mp3");
+      water.play();
+      waterAnimation($canvas2);
+
+      const $desktopMobileinside = document.querySelector(
+        `.desktop_mobileinside`
+      );
+      const fade = TweenLite.to($desktopMobileinside, 1, { opacity: 0 });
+      fade.duration(6);
+    }, 2000);
   };
 
   let audio;
@@ -1677,6 +1687,12 @@ global.THREE = THREE;
     const $fullstoryscroll = document.querySelector(`.fullstory_scroll`);
     const $chat = document.querySelector(".main_grid");
 
+    const $desktopMobileinside = document.querySelector(
+      `.desktop_mobileinside`
+    );
+
+    $desktopMobileinside.style.opacity = 1;
+
     if ($fullstory && $fullstoryscroll) {
       $fullstoryscroll.removeChild($fullstory);
     }
@@ -1725,6 +1741,8 @@ global.THREE = THREE;
     setTimeout(() => {
       setHeightChat();
     }, 10000);
+
+    Cookies.set("emma", "emma", { expires: 7 });
   };
 
   const init = () => {

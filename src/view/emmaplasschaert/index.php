@@ -14,7 +14,7 @@
     </div>
   </header>
   <main>
-  <section>
+  <section class="dialoog_grid_Scroll">
     <div class="dialoog_scroll">
       <div class="dialoog_list">
         <ul class="messages">

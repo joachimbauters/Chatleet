@@ -10,7 +10,7 @@ export default class Item extends Phaser.Physics.Arcade.Sprite {
     this.body.onWorldBounds = false;
     this.disableBody(true, true);
 
-    this.setScale(0.3);
+    this.setScale(0.35);
 
     this.createAnimations();
   }

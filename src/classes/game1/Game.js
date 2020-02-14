@@ -1,6 +1,6 @@
 import PreloadScene from "./scenes/PreloadScene.js";
-import BootScene from "./scenes/BootScene.js";
 import StartScene from "./scenes/StartScene.js";
+import GameOverScene from "./scenes/GameOverScene.js";
 
 class Game extends Phaser.Game {
   constructor() {
@@ -9,7 +9,7 @@ class Game extends Phaser.Game {
       width: window.innerWidth,
       height: window.innerHeight,
       title: `games`,
-      scene: [BootScene, PreloadScene, StartScene],
+      scene: [PreloadScene, StartScene, GameOverScene],
       url: `http://www.devine.be`,
       version: `1.0`,
       parent: document.querySelector(".game_container"),
@@ -23,6 +23,9 @@ class Game extends Phaser.Game {
           debug: false,
           gravity: { y: 100 }
         }
+      },
+      audio: {
+        disableWebAudio: true
       }
     });
   }

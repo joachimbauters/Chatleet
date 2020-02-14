@@ -14,7 +14,7 @@
       "storyduration": 5,
       "game": {
         "link": "index.php?page=introzeilen",
-        "cover": "./assets/game_cover_zeilen.jpg"
+        "cover": "./assets/game_cover_zeilen.png"
       },
       "active": true
     },
@@ -32,7 +32,7 @@
       "storyduration": 7,
       "game": {
         "link": "index.php?page=introfietsen",
-        "cover": "./assets/game_cover_zeilen.jpg"
+        "cover": "./assets/game_cover_fietsen.png"
       },
       "active": false
     },

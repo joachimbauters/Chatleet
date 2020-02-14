@@ -1,5 +1,3 @@
-import Preloader from "../objects/Preloader";
-
 class PreloadScene extends Phaser.Scene {
   constructor() {
     super({
@@ -8,13 +6,6 @@ class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.preloader = new Preloader(
-      this,
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2,
-      `preloader`
-    );
-    this.preloader.anims.play(`loading`);
     this.load.spritesheet("bike1", "./assets/bike/bike1.png", {
       frameWidth: 612,
       frameHeight: 536

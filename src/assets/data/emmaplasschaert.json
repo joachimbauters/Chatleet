@@ -6,17 +6,17 @@
       "ontvanger": "Emma Plasschaert",
       "premise": [
         {
-          "type": "message",
-          "user": "character",
-          "character": "emma",
-          "text": "Laat het zeilen maar komen!! ⛵️💪",
-          "delay": 1000
-        },
-        {
           "type": "image",
           "user": "character",
           "character": "emma",
           "src": "./assets/scenario-1/selfie.png",
+          "delay": 1000
+        },
+        {
+          "type": "message",
+          "user": "character",
+          "character": "emma",
+          "text": "Laat het zeilen maar komen!! ⛵️💪",
           "delay": 4000
         }
       ],
@@ -27,7 +27,7 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Amai, ik zal wel studeren voor da examen van morgen!",
+              "text": "Amai gelukzak en ik maar studeren voor da examen van morgen!",
               "id": 1
             },
             {
@@ -159,7 +159,7 @@
               "type": "message",
               "user": "other",
               "character": "gebruiker",
-              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan leske Thermo dynamica ook wel lukken wh 😝",
+              "text": "Je hebt een gouden medaille op het wereld kampioenschap 🥇, dan zal een leske Thermo dynamica ook wel lukken zeker 😝",
               "id": 5
             }
           ],
@@ -231,22 +231,29 @@
           "type": "message",
           "user": "character",
           "character": "emma",
-          "text": "Nu je wat meer over mij weet, laten we eens zien of de wind voor jou mee zit 😉. Wil je me eens challengen?",
+          "text": "Oei sorry... was even verdonken in mijn gedachten",
           "delay": 1000
         },
         {
           "type": "message",
           "user": "character",
           "character": "emma",
-          "text": "Probeer mijn Hoogste score te verslaan in deze game challenge!",
+          "text": "Maar sinds je nu meer over mij weet, laten we eens zien of de wind voor jou mee zit 😉. Wil je me eens challengen?",
           "delay": 4000
+        },
+        {
+          "type": "message",
+          "user": "character",
+          "character": "emma",
+          "text": "Probeer mijn hoogste score te verslaan in deze game challenge!",
+          "delay": 7000
         },
         {
           "type": "game",
           "user": "character",
           "character": "emma",
           "src": "./assets/scenario-1/game_cover_chat.png",
-          "delay": 7000
+          "delay": 10000
         }
       ]
     }

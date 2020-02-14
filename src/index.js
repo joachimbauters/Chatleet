@@ -1122,13 +1122,15 @@ global.THREE = THREE;
         return;
       }
 
-      let count = -250;
+      let count = 0;
       let count3 = 1600;
       let count2 = 1;
-      let angle = 2 + Math.PI;
+      let angle = 0;
+      let angle2 = 0;
       $upBtn.addEventListener(
         "click",
         function() {
+          count -= 250;
           new TWEEN.Tween(planesStory.mesh.position)
             .to(
               {
@@ -1151,6 +1153,9 @@ global.THREE = THREE;
             })
             .start();
 
+          angle = count2 * 2 + Math.PI;
+
+          count2 += 1;
           new TWEEN.Tween(planesStory.mesh.rotation)
             .to(
               {
@@ -1200,10 +1205,6 @@ global.THREE = THREE;
             )
             .easing(TWEEN.Easing.Cubic.InOut)
             .start();
-
-          count -= 250;
-          count2++;
-          angle = count2 * 2 + Math.PI;
         },
         true
       );
@@ -1211,18 +1212,74 @@ global.THREE = THREE;
       $downBtn.addEventListener(
         "click",
         function() {
-          count += 250;
-          new TWEEN.Tween(planesStory.mesh.position)
-            .to(
-              {
-                x: 0,
-                y: count,
-                z: 0
-              },
-              2000
-            )
-            .easing(TWEEN.Easing.Cubic.InOut)
-            .start();
+          if (count2 >= 2) {
+            count += 250;
+            new TWEEN.Tween(planesStory.mesh.position)
+              .to(
+                {
+                  x: 0,
+                  y: count,
+                  z: 0
+                },
+                2000
+              )
+              .easing(TWEEN.Easing.Cubic.InOut)
+              .start();
+
+            count2 -= 1;
+            angle = (12 - count2) * 2 - Math.PI + Math.PI;
+
+            new TWEEN.Tween(planesStory.mesh.rotation)
+              .to(
+                {
+                  x: 0,
+                  y: angle,
+                  z: 0
+                },
+                2000
+              )
+              .easing(TWEEN.Easing.Cubic.InOut)
+              .start();
+
+            count3 += 150;
+            new TWEEN.Tween(group.position)
+              .to(
+                {
+                  x: 0,
+                  y: count3,
+                  z: 0
+                },
+                2000
+              )
+              .easing(TWEEN.Easing.Cubic.InOut)
+              .start();
+
+            new TWEEN.Tween(particleSystem.position)
+              .to(
+                {
+                  x: 0,
+                  y: count,
+                  z: 0
+                },
+                2000
+              )
+              .easing(TWEEN.Easing.Cubic.InOut)
+              .start();
+
+            new TWEEN.Tween(particleSystem2.position)
+              .to(
+                {
+                  x: 0,
+                  y: count,
+                  z: 0
+                },
+                2000
+              )
+              .easing(TWEEN.Easing.Cubic.InOut)
+              .start();
+          } else {
+            return;
+          }
         },
         true
       );

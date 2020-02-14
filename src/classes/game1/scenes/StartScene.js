@@ -190,8 +190,8 @@ class StartScene extends Phaser.Scene {
 
     this.schade -= 25;
     if (this.punten >= 5) {
-      this.punten -= 5;
-      this.five = this.add.text(obj2.x, obj2.y, `-5`, {
+      this.punten -= 2;
+      this.five = this.add.text(obj2.x, obj2.y, `-2`, {
         fontSize: `50px`,
         fill: `#FFFFFF`,
         fontFamily: "made"
@@ -265,7 +265,6 @@ class StartScene extends Phaser.Scene {
     this.value = 2500;
     this.speed = 2500;
     this.score = 0;
-    this.punten = 0;
     this.schade = 100;
     this.levelSpeed = 5;
 
